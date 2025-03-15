@@ -22,14 +22,14 @@
                         data-aos-offset="50">
                         <div class="image">
                             <a href="#" class="heart"><i class="fas fa-heart"></i></a>
-                            <a href="tour-details">
+                            <a href="{{ route('tour-detail', ['id' => $tour->tourId]) }}">
                                 <img src="{{ asset($tour->images[0] ?? 'clients/assets/images/default.jpg') }}" alt="Destination">
                             </a>
                         </div>
                         <div class="content">
                             <span class="location"><i class="fal fa-map-marker-alt"></i> {{ $tour->destination }}</span>
                             <h5 class="tour-title">
-                                <a href="tour-details">{{ $tour->titlle }}</a>
+                                <a href="{{ route('tour-detail', ['id' => $tour->tourId]) }}">{{ $tour->titlle }}</a>
                             </h5> 
                             <p class="tour-description">{{ Str::limit($tour->description, 100, '...') }}</p> 
                         </div>
@@ -41,7 +41,7 @@
             @endforeach
         </div>
 
-        <!-- Hiển thị phân trang với view tùy chỉnh -->
+        <!-- Hiển thị phân trang -->
         <div class="pagination-wrapper d-flex justify-content-center mt-4">
             {{ $tours->links('pagination') }}
         </div>

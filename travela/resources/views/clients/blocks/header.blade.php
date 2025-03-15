@@ -45,7 +45,7 @@
             <div class="header-inner rel d-flex align-items-center">
                 <div class="logo-outer">
                     <div class="logo">
-                        <a href="home">
+                        <a href="{{ url('/home') }}">
                             <img src="{{ asset('clients/assets/images/logos/logo.png') }}" alt="Logo" title="Logo">
                         </a>
                     </div>
@@ -56,7 +56,7 @@
                     <nav class="main-menu navbar-expand-lg">
                         <div class="navbar-header">
                             <div class="mobile-logo">
-                                <a href="index.html">
+                                <a href="{{ url('/home') }}">
                                     <img src="{{ asset('clients/assets/images/logos/logo.png') }}" alt="Logo" title="Logo">
                                 </a>
                             </div>
@@ -72,50 +72,50 @@
                             <ul class="navigation clearfix">
                                 <li class="dropdown current"><a href="#">Home</a>
                                     <ul>
-                                        <li><a href="index.html">Travel Agency</a></li>
-                                        <li><a href="index2.html">City Tour</a></li>
-                                        <li><a href="index3.html">Tour Package</a></li>
+                                        <li><a href="{{ url('/') }}">Travel Agency</a></li>
+                                        <li><a href="{{ url('/home') }}">City Tour</a></li>
+                                        <li><a href="{{ url('/home') }}">Tour Package</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="about">About</a></li>
-                                <li class="dropdown"><a href="tours">Tours</a>
+                                <li><a href="{{ url('/about') }}">About</a></li>
+                                <li class="dropdown"><a href="{{ url('/tours') }}">Tours</a>
                                     <ul>
-                                        <li><a href="tours">Tour List</a></li>
-                                        <li><a href="tour-grid.html">Tour Grid</a></li>
-                                        <li><a href="tour-sidebar.html">Tour Sidebar</a></li>
-                                        <li><a href="tour-details">Tour Details</a></li>
-                                        <li><a href="tour-guides">Tour Guide</a></li>
+                                        <li><a href="{{ url('/tours') }}">Tour List</a></li>
+                                        <li><a href="#">Tour Grid</a></li>
+                                        <li><a href="#">Tour Sidebar</a></li>
+                                        <li><a href="{{ url('/tour-details') }}">Tour Details</a></li>
+                                        <li><a href="{{ url('/tour-guides') }}">Tour Guide</a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a href="#">Destinations</a>
                                     <ul>
-                                        <li><a href="destination">Destination</a></li>
+                                        <li><a href="{{ url('/destination') }}">Destination</a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a href="#">Pages</a>
                                     <ul>
-                                        <li><a href="pricing.html">Pricing</a></li>
-                                        <li><a href="faqs.html">FAQs</a></li>
+                                        <li><a href="#">Pricing</a></li>
+                                        <li><a href="#">FAQs</a></li>
                                         <li class="dropdown"><a href="#">Gallery</a>
                                             <ul>
-                                                <li><a href="gallery-grid.html">Gallery Grid</a></li>
-                                                <li><a href="gallery-slider.html">Gallery Slider</a></li>
+                                                <li><a href="#">Gallery Grid</a></li>
+                                                <li><a href="#">Gallery Slider</a></li>
                                             </ul>
                                         </li>
                                         <li class="dropdown"><a href="#">Products</a>
                                             <ul>
-                                                <li><a href="shop.html">Our Products</a></li>
-                                                <li><a href="product-details.html">Product Details</a></li>
+                                                <li><a href="#">Our Products</a></li>
+                                                <li><a href="#">Product Details</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="contact.html">Contact Us</a></li>
-                                        <li><a href="404.html">404 Error</a></li>
+                                        <li><a href="#">Contact Us</a></li>
+                                        <li><a href="#">404 Error</a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown"><a href="#">Blog</a>
                                     <ul>
-                                        <li><a href="blog.html">Blog List</a></li>
-                                        <li><a href="blog-details.html">Blog Details</a></li>
+                                        <li><a href="#">Blog List</a></li>
+                                        <li><a href="#">Blog Details</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -135,13 +135,13 @@
 
                 <!-- Menu Button -->
                 <div class="menu-btns py-10 d-flex align-items-center">
-                    <a href="contact.html" class="theme-btn style-two bgc-secondary">
+                    <a href="#" class="theme-btn style-two bgc-secondary">
                         <span data-hover="Book Now">Book Now</span>
                         <i class="fal fa-arrow-right"></i>
                     </a>
 
                     <!-- Nút Login -->
-                    <a href="login" class="login-btn ms-3">
+                    <a href="{{ url('/login') }}" class="login-btn ms-3">
                         <i class="fas fa-user"></i> Login
                     </a>
 

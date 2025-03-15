@@ -28,27 +28,29 @@ class Tour extends Model
 
     return $allTours;
 }
-        //Lấy chi tiết tour
-        public function getTourDetail($id)
-        {
-            $getTourDetail = DB::table($this->table)
-                ->where('tourId', $id)
-                ->first();
-    
-            if ($getTourDetail) {
-                // Lấy danh sách hình ảnh thuộc về tour
-                $getTourDetail->images = DB::table('images')
-                    ->where('tourId', $getTourDetail->tourId)
-                    ->limit(5)
-                    ->pluck('imageUrl');
-    
-                // Lấy danh sách timeline thuộc về tour
-                $getTourDetail->timeline = DB::table('timeline')
-                    ->where('tourId', $getTourDetail->tourId)
-                    ->get();
-            }
-    
-    
-            return $getTourDetail;
+        /// Lấy chi tiết tour
+    public function getTourDetail($id)
+    {
+        $getTourDetail = DB::table($this->table)
+            ->where('tourId', $id)
+            ->first();
+
+        if ($getTourDetail) {
+            // Lấy danh sách hình ảnh thuộc về tour và chuyển đổi đường dẫn
+            $getTourDetail->images = DB::table('images')
+                ->where('tourId', $getTourDetail->tourId)
+                ->limit(5)
+                ->pluck('imageUrl')
+                ->map(function ($image) {
+                    return asset(str_replace('D:\\travela\\public\\', '', $image)); // Chuyển đổi đường dẫn
+                });
+
+            // Lấy danh sách timeline thuộc về tour
+            $getTourDetail->timeline = DB::table('timeline')
+                ->where('tourId', $getTourDetail->tourId)
+                ->get();
         }
+
+        return $getTourDetail;
+    }
 }

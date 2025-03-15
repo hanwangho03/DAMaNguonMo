@@ -50,10 +50,11 @@
                 <hr class="mt-0">
                 <div class="container">
                     <div class="banner-inner pt-15 pb-25">
-                        <h2 class="page-title mb-10" data-aos="fade-left" data-aos-duration="1500" data-aos-offset="50">Bali, Indonesia</h2>
+                    <h2 class="page-title mb-10 aos-init aos-animate" data-aos="fade-left" data-aos-duration="1500"
+                    data-aos-offset="50">{{ $tourDetail->destination }}</h2>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb justify-content-center mb-20" data-aos="fade-right" data-aos-delay="200" data-aos-duration="1500" data-aos-offset="50">
-                                <li class="breadcrumb-item"><a href="clients/index.html">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
                                 <li class="breadcrumb-item active">Tour Details</li>
                             </ol>
                         </nav>
@@ -64,43 +65,48 @@
         <!-- Page Banner End -->
         
         
-        <!-- Tour Gallery start -->
-        <div class="tour-gallery">
-            <div class="container-fluid">
-                <div class="row gap-10 justify-content-center rel">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="gallery-item">
-                            <img src="clients/assets/images/destinations/destination-details1.jpg" alt="Destination">
-                        </div>
-                        <div class="gallery-item">
-                            <img src="clients/assets/images/destinations/destination-details4.jpg" alt="Destination">
-                        </div>
+<!-- Tour Gallery start -->
+@if (!empty($tourDetail->images) && count($tourDetail->images) > 0)
+    <div class="tour-gallery">
+        <div class="container-fluid">
+            <div class="row gap-10 justify-content-center rel">
+                <div class="col-lg-4 col-md-6">
+                    <div class="gallery-item">
+                        <img src="{{ asset(str_replace('\\', '/', $tourDetail->images[0])) }}" alt="Destination">
                     </div>
-                    <div class="col-lg-4 col-md-6">
+                    @if (isset($tourDetail->images[3]))
                         <div class="gallery-item">
-                            <img src="clients/assets/images/destinations/destination-details2.jpg" alt="Destination">
+                            <img src="{{ asset(str_replace('\\', '/', $tourDetail->images[3])) }}" alt="Destination">
                         </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
+                    @endif
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    @if (isset($tourDetail->images[1]))
                         <div class="gallery-item">
-                            <img src="clients/assets/images/destinations/destination-details3.jpg" alt="Destination">
+                            <img src="{{ asset(str_replace('\\', '/', $tourDetail->images[1])) }}" alt="Destination">
                         </div>
+                    @endif
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    @if (isset($tourDetail->images[2]))
                         <div class="gallery-item">
-                            <img src="clients/assets/images/destinations/destination-details5.jpg" alt="Destination">
+                            <img src="{{ asset(str_replace('\\', '/', $tourDetail->images[2])) }}" alt="Destination">
                         </div>
-                    </div>
-                    <div class="col-lg-12">
-                       <div class="gallery-more-btn">
-                            <a href="clients/contact.html" class="theme-btn style-two bgc-secondary">
-                                <span data-hover="See All Photos">See All Photos</span>
-                                <i class="fal fa-arrow-right"></i>
-                            </a>
-                       </div>
+                    @endif
+                </div>
+                <div class="col-lg-12">
+                    <div class="gallery-more-btn">
+                        <a href="" class="theme-btn style-two bgc-secondary">
+                            <span data-hover="See All Photos">See All Photos</span>
+                            <i class="fal fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Tour Gallery End -->
+    </div>
+@endif
+<!-- Tour Gallery End -->
         
         
         <!-- Tour Header Area start -->
@@ -109,9 +115,11 @@
                 <div class="row justify-content-between">
                     <div class="col-xl-6 col-lg-7">
                         <div class="tour-header-content mb-15" data-aos="fade-left" data-aos-duration="1500" data-aos-offset="50">
-                            <span class="location d-inline-block mb-10"><i class="fal fa-map-marker-alt"></i> Bali, Indonesia</span>
+                            <span class="location d-inline-block mb-10" style="color: black;">
+                                <i class="fal fa-map-marker-alt"></i> {{ $tourDetail->destination }}
+                            </span>
                             <div class="section-title pb-5">
-                                <h2>Relinking Beach in Nusa panada island, Bali, Indonesia</h2>
+                                <h2>{{ $tourDetail->titlle }}</h2>
                             </div>
                             <div class="ratting">
                                 <i class="fas fa-star"></i>
@@ -141,67 +149,69 @@
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="tour-details-content">
-                            <h3>Explore Tours</h3>
-                            <p>Bali, Indonesia, is a tropical paradise renowned for its breathtaking beaches, vibrant culture, and lush landscapes. Located at the westernmost end of the Lesser Sunda Islands, Bali boasts a warm, tropical climate that makes it a year-round destination. Visitors are drawn to its picturesque beaches like Kuta, Seminyak, and Nusa Dua, ideal for surfing, sunbathing, and diving. The island's rich cultural heritage is evident in its numerous temples, including the iconic Tanah Lot and Uluwatu Temple, as well as in Ubud, the cultural heart of Bali, known for its traditional dance performances and art markets. Nature enthusiasts can explore the terraced rice paddies in Tegallalang, hike up Mount Batur, or visit the stunning waterfalls of Tegenungan and Gitgit. </p>
+                            <h3>Khám Phá Tour</h3>
+                            <p>{{ $tourDetail->description }} </p>
                             <div class="row pb-55">
                                 <div class="col-md-6">
                                     <div class="tour-include-exclude mt-30">
-                                        <h5>Included and Excluded</h5>
+                                        <h5>Bao gồm và không bao gồm</h5>
                                         <ul class="list-style-one check mt-25">
-                                            <li><i class="far fa-check"></i> Pick and Drop Services</li>
-                                            <li><i class="far fa-check"></i> 1 Meal Per Day</li>
-                                            <li><i class="far fa-check"></i> Cruise Dinner & Music Event</li>
-                                            <li><i class="far fa-check"></i> Visit 7 Best Places in the City</li>
-                                            <li><i class="far fa-check"></i> Bottled Water on Buses</li>
-                                            <li><i class="far fa-check"></i> Transportation Luxury Tour Bus</li>
+                                            <li><i class="far fa-check"></i> Dịch vụ đón và trả khách</li>
+                                            <li><i class="far fa-check"></i> 1 bữa ăn mỗi ngày</li>
+                                            <li><i class="far fa-check"></i> Bữa tối trên du thuyền & Sự kiện âm nhạc</li>
+                                            <li><i class="far fa-check"></i> Tham quan 7 địa điểm tuyệt vời nhất trong thành phố
+                                            </li>
+                                            <li><i class="far fa-check"></i> Nước đóng chai trên xe buýt</li>
+                                            <li><i class="far fa-check"></i> Phương tiện di chuyển Xe buýt du lịch hạng sang
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="tour-include-exclude mt-30">
-                                        <h5>Excluded</h5>
+                                        <h5>Không bao gồm</h5>
                                         <ul class="list-style-one mt-25">
-                                            <li><i class="far fa-times"></i> Gratuities</li>
-                                            <li><i class="far fa-times"></i> Hotel pickup and drop-off</li>
-                                            <li><i class="far fa-times"></i> Lunch, Food & Drinks</li>
-                                            <li><i class="far fa-times"></i> Optional upgrade to a glass</li>
-                                            <li><i class="far fa-times"></i> Additional Services</li>
-                                            <li><i class="far fa-times"></i> Insurance</li>
+                                            <li><i class="far fa-times"></i> Tiền boa</li>
+                                            <li><i class="far fa-times"></i> Đón và trả khách tại khách sạn</li>
+                                            <li><i class="far fa-times"></i> Bữa trưa, Đồ ăn & Đồ uống</li>
+                                            <li><i class="far fa-times"></i> Nâng cấp tùy chọn lên một ly</li>
+                                            <li><i class="far fa-times"></i> Dịch vụ bổ sung</li>
+                                            <li><i class="far fa-times"></i> Bảo hiểm</li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <h3>Activities</h3>
+                        <h3>Hoạt động</h3>
                         <div class="tour-activities mt-30 mb-45">
                             <div class="tour-activity-item">
                                 <i class="flaticon-hiking"></i>
-                                <b>Hiking</b>
+                                <b>Leo núi</b>
                             </div>
                             <div class="tour-activity-item">
                                 <i class="flaticon-fishing"></i>
-                                <b>Fishing</b>
+                                <b>Câu cá</b>
                             </div>
                             <div class="tour-activity-item">
                                 <i class="flaticon-man"></i>
-                                <b>Kayak shooting</b>
+                                <b>Bắn súng kayak</b>
                             </div>
                             <div class="tour-activity-item">
                                 <i class="flaticon-kayak-1"></i>
-                                <b>Kayak</b>
+                                <b>Chèo thuyền kayak</b>
                             </div>
                             <div class="tour-activity-item">
                                 <i class="flaticon-bonfire"></i>
-                                <b>Campfire</b>
+                                <b>Đốt lửa trại</b>
                             </div>
                             <div class="tour-activity-item">
                                 <i class="flaticon-flashlight"></i>
-                                <b>Night Exploring</b>
+                                <b>Khám phá ban đêm</b>
                             </div>
                             <div class="tour-activity-item">
                                 <i class="flaticon-cycling"></i>
-                                <b>Biking</b>
+                                <b>Đạp xe</b>
                             </div>
                             <div class="tour-activity-item">
                                 <i class="flaticon-meditation"></i>
@@ -209,133 +219,28 @@
                             </div>
                         </div>
 
-                        <h3>Itinerary</h3>
-                        <div class="accordion-two mt-25 mb-60" id="faq-accordion-two">
-                            <div class="accordion-item">
-                                <h5 class="accordion-header">
-                                    <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwoOne">
-                                       Day 1 - Arrive at campground
-                                    </button>
-                                </h5>
-                                <div id="collapseTwoOne" class="accordion-collapse collapse" data-bs-parent="#faq-accordion-two">
-                                    <div class="accordion-body">
-                                        <p>To take a trivial example which undertakes laborious physical exercise except to obtain some advantage pleasure annoying consequences</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h5 class="accordion-header">
-                                    <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#collapseTwoTwo">
-                                        Day 2 - Wake up early and embark on a day hike
-                                    </button>
-                                </h5>
-                                <div id="collapseTwoTwo" class="accordion-collapse collapse show" data-bs-parent="#faq-accordion-two">
-                                    <div class="accordion-body">
-                                        <p>The early start ensures you can fully immerse yourself in the tranquility of nature before the world fully awakens. As the morning light filters through the trees, you'll experience the crisp, fresh air and the peaceful sounds of the forest. The trail ahead offers both a physical challenge promise of breathtaking.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h5 class="accordion-header">
-                                    <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwoThree">
-                                        Day 3 - Join a guided ranger-led nature walk
-                                    </button>
-                                </h5>
-                                <div id="collapseTwoThree" class="accordion-collapse collapse" data-bs-parent="#faq-accordion-two">
-                                    <div class="accordion-body">
-                                        <p>To take a trivial example which undertakes laborious physical exercise except to obtain some advantage pleasure annoying consequences</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h5 class="accordion-header">
-                                    <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwoFour">
-                                        Day 4 - Take a break from hiking
-                                    </button>
-                                </h5>
-                                <div id="collapseTwoFour" class="accordion-collapse collapse" data-bs-parent="#faq-accordion-two">
-                                    <div class="accordion-body">
-                                        <p>To take a trivial example which undertakes laborious physical exercise except to obtain some advantage pleasure annoying consequences</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h5 class="accordion-header">
-                                    <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwoFive">
-                                        Day 5 - Pack a lunch and embark on a longer hike
-                                    </button>
-                                </h5>
-                                <div id="collapseTwoFive" class="accordion-collapse collapse" data-bs-parent="#faq-accordion-two">
-                                    <div class="accordion-body">
-                                        <p>To take a trivial example which undertakes laborious physical exercise except to obtain some advantage pleasure annoying consequences</p>
-                                    </div>
+                        <h3>Lịch trình</h3>
+                <div class="accordion-two mt-25 mb-60" id="faq-accordion-two">
+                    @php
+                        $day = 1;
+                    @endphp
+                    @foreach ($tourDetail->timeline as $timeline)
+                        <div class="accordion-item">
+                            <h5 class="accordion-header">
+                                <button class="accordion-button collapsed" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseTwo{{ $timeline->timeLineId }}">
+                                    Ngày {{ $day++ }} - {{ $timeline->title }}
+                                </button>
+                            </h5>
+                            <div id="collapseTwo{{ $timeline->timeLineId }}" class="accordion-collapse collapse"
+                                data-bs-parent="#faq-accordion-two">
+                                <div class="accordion-body">
+                                    <p>{!! $timeline->description !!}</p>
                                 </div>
                             </div>
                         </div>
-
-                        <h3>Frequently Asked Questions</h3>
-                        <div class="accordion-one mt-25 mb-60" id="faq-accordion">
-                            <div class="accordion-item">
-                                <h5 class="accordion-header">
-                                    <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                                       01_How do I book a tour or travel package?
-                                    </button>
-                                </h5>
-                                <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#faq-accordion">
-                                    <div class="accordion-body">
-                                        <p>To take a trivial example which undertakes laborious physical exercise except to obtain some advantage pleasure annoying consequences</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h5 class="accordion-header">
-                                    <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
-                                        02_What is included in the travel package?
-                                    </button>
-                                </h5>
-                                <div id="collapseTwo" class="accordion-collapse collapse show" data-bs-parent="#faq-accordion">
-                                    <div class="accordion-body">
-                                        <p>The early start ensures you can fully immerse yourself in the tranquility of nature before the world fully awakens. As the morning light filters through the trees, you'll experience the crisp, fresh air and the peaceful sounds of the forest. The trail ahead offers both a physical challenge promise of breathtaking.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h5 class="accordion-header">
-                                    <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree">
-                                        03_What is your cancellation and refund policy?
-                                    </button>
-                                </h5>
-                                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#faq-accordion">
-                                    <div class="accordion-body">
-                                        <p>To take a trivial example which undertakes laborious physical exercise except to obtain some advantage pleasure annoying consequences</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h5 class="accordion-header">
-                                    <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseFour">
-                                        04_Can I customize my tour or travel package?
-                                    </button>
-                                </h5>
-                                <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#faq-accordion">
-                                    <div class="accordion-body">
-                                        <p>To take a trivial example which undertakes laborious physical exercise except to obtain some advantage pleasure annoying consequences</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h5 class="accordion-header">
-                                    <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseFive">
-                                        05_What documents do I need to travel?
-                                    </button>
-                                </h5>
-                                <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#faq-accordion">
-                                    <div class="accordion-body">
-                                        <p>To take a trivial example which undertakes laborious physical exercise except to obtain some advantage pleasure annoying consequences</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    @endforeach
+                </div>
 
                         <h3>Maps</h3>
                         <div class="tour-map mt-30 mb-50">

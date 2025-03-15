@@ -28,6 +28,6 @@ Route   ::get("/home", [HomeController::class,'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/tours', [TourController::class, 'index'])->name('tours');
 Route::get('/tour-guides', [TravelGuidesController::class, 'index'])->name('team');
-Route::get('/tour-details', [TourDetailController::class, 'index'])->name('details');
+Route::get('/tour/{id}', [TourDetailController::class, 'index'])->name('tour-detail');
 Route::get('/destination', [DestinationController::class, 'index'])->name('destination');
 Route::get('/login', [LoginController::class, 'index'])->name('login');

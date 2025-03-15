@@ -31,3 +31,10 @@ Route::get('/tour-guides', [TravelGuidesController::class, 'index'])->name('team
 Route::get('/tour/{id}', [TourDetailController::class, 'index'])->name('tour-detail');
 Route::get('/destination', [DestinationController::class, 'index'])->name('destination');
 Route::get('/login', [LoginController::class, 'index'])->name('login');
+//Handle Login
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/register', [LoginController::class, 'register'])->name('register');
+Route::post('/login', [LoginController::class, 'login'])->name('user-login');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('activate-account/{token}', [LoginController::class, 'activateAccount'])->name('activate.account');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

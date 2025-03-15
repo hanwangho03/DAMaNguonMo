@@ -4,6 +4,7 @@ namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Tour;
 
 class TourController extends Controller
 {
@@ -12,10 +13,13 @@ class TourController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+   public function index()
     {
-        $title = 'Giới thiệu';
-        return view('clients.tours', compact('title'));
+        $title = 'Danh sách Tour';
+        $tourModel = new Tour();
+        $tours = $tourModel->getAllTours(4); // Lấy danh sách tour có phân trang
+        //dd ($tours);
+        return view('clients.tours', compact('title', 'tours'));
     }
 
     /**

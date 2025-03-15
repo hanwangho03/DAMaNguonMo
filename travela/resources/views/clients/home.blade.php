@@ -58,7 +58,7 @@
             </div>
         </div>
         <div class="row justify-content-center">
-            @foreach ($tours as $tour)
+            @foreach ($tours->take(4) as $tour) <!-- Giới hạn hiển thị 4 tour -->
                 <div class="col-xxl-3 col-xl-4 col-md-6" style="margin-bottom: 30px">
                     <div class="destination-item block_tours" data-aos="fade-up" data-aos-duration="1500"
                         data-aos-offset="50">
@@ -81,6 +81,39 @@
     </div>
 </section>
 <!-- Destinations Area end -->
+<style>
+    /* CSS để đồng bộ kích thước các khung tour */
+    .destination-item {
+        height: 450px; /* Chiều cao cố định để đồng bộ tất cả khung */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .destination-item .image {
+        height: 200px; /* Chiều cao cố định cho hình ảnh */
+        overflow: hidden;
+    }
+
+    .destination-item .image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
+        transition: transform 0.3s ease;
+    }
+
+    .destination-item .image img:hover {
+        transform: scale(1.05);
+    }
+
+    .destination-item .content {
+        padding: 15px;
+        flex-grow: 1; /* Chiếm không gian còn lại */
+    }
+
+    .destination-item .destination-footer {
+        padding: 10px 15px;
+    }
+</style>
 
         <!-- Popular Destinations Area start -->
         <section class="popular-destinations-area rel z-1">

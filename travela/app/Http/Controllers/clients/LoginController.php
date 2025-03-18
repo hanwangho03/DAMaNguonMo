@@ -80,7 +80,9 @@ class LoginController extends Controller
         }
     
         // Đăng nhập thành công
+        $request->session()->put('userId', $user->userId); // Lưu userId
         $request->session()->put('username', $username);
+        $request->session()->save(); // Đảm bảo session được lưu
     
         return redirect()->route('home')->with('message', 'Đăng nhập thành công!');
     }

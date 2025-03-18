@@ -92,26 +92,8 @@
                                         <li><a href="{{ url('/destination') }}">Destination</a></li>
                                     </ul>
                                 </li>
-                                <li class="dropdown"><a href="#">Pages</a>
-                                    <ul>
-                                        <li><a href="#">Pricing</a></li>
-                                        <li><a href="#">FAQs</a></li>
-                                        <li class="dropdown"><a href="#">Gallery</a>
-                                            <ul>
-                                                <li><a href="#">Gallery Grid</a></li>
-                                                <li><a href="#">Gallery Slider</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="dropdown"><a href="#">Products</a>
-                                            <ul>
-                                                <li><a href="#">Our Products</a></li>
-                                                <li><a href="#">Product Details</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Contact Us</a></li>
-                                        <li><a href="#">404 Error</a></li>
-                                    </ul>
-                                </li>
+                                <li ><a href="{{ url('/user-bookings') }}">Booked</a></li>
+                                    
                                 <li class="dropdown"><a href="#">Blog</a>
                                     <ul>
                                         <li><a href="#">Blog List</a></li>

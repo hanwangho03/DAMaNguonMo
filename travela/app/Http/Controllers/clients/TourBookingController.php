@@ -4,29 +4,18 @@ namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Tour;
 
-class TourDetailController extends Controller
+class TourBookingController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
-{
-    $tourModel = new Tour();
-    $tourDetail = $tourModel->getTourDetail($id);
-
-    if (!$tourDetail) {
-        return abort(404);
+    public function index()
+    {
+        return view("clients.tour-booking");
     }
-
-    // Debug để kiểm tra dữ liệu
-    //dd($tourDetail);
-
-    return view("clients.tour-details", compact("tourDetail"));
-}
 
     /**
      * Show the form for creating a new resource.

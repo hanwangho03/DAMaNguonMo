@@ -8,6 +8,8 @@ use App\Http\Controllers\clients\TourController;
 use App\Http\Controllers\clients\TourDetailController;
 use App\Http\Controllers\clients\TravelGuidesController;
 use App\Http\Controllers\clients\LoginController;
+use App\Http\Controllers\clients\TourBookingController;
+use App\Http\Controllers\clients\BookingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,3 +40,14 @@ Route::post('/login', [LoginController::class, 'login'])->name('user-login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('activate-account/{token}', [LoginController::class, 'activateAccount'])->name('activate.account');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
+Route::get('/tour-booking', [TourBookingController::class, 'index'])->name('tour-booking');
+Route::get('/tour-booking/{id}', [BookingController::class, 'showBookingForm'])->name('tour-booking');
+Route::post('/tour-booking', [BookingController::class, 'storeBooking'])->name('store-booking');
+Route::get('/booking-success', function () {
+    return view('clients.booking-success');
+})->name('booking-success');
+Route::get('/booking-success', [BookingController::class, 'showBookingSuccess'])->name('booking-success');
+Route::get('/invoice/{invoiceId}', [BookingController::class, 'showInvoice'])->name('invoice-detail');
+Route::get('/user-bookings', [BookingController::class, 'userBookings'])->name('user.bookings');

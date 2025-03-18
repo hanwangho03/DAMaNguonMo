@@ -64,11 +64,15 @@
                         data-aos-offset="50">
                         <div class="image">
                             <a href="#" class="heart"><i class="fas fa-heart"></i></a>
-                            <img src="{{ asset($tour->images[0] ?? 'clients/assets/images/default.jpg') }}" alt="Destination">
+                            <a href="{{ route('tour-detail', ['id' => $tour->tourId]) }}">
+                                <img src="{{ asset($tour->images[0] ?? 'clients/assets/images/default.jpg') }}" alt="Destination">
+                            </a>
                         </div>
                         <div class="content">
                             <span class="location"><i class="fal fa-map-marker-alt"></i> {{ $tour->destination }}</span>
-                            <h5 class="tour-title">{{ $tour->titlle }}</h5> 
+                            <h5 class="tour-title">
+                                <a href="{{ route('tour-detail', ['id' => $tour->tourId]) }}">{{ $tour->titlle }}</a>
+                            </h5> 
                             <p class="tour-description">{{ Str::limit($tour->description, 100, '...') }}</p> 
                         </div>
                         <div class="destination-footer">

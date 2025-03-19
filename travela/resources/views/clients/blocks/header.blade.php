@@ -123,24 +123,29 @@
                     </a>
 
                     @if(session()->has('username'))
-                        <!-- Hiển thị avatar -->
-                        <div class="user-menu ms-3 d-flex align-items-center">
-                            <img src="{{ asset('clients/assets/images/team/avatauser.jpg') }}" 
-                                alt="User Avatar" class="rounded-circle" width="40" height="40">
-                            <span class="ms-2">{{ session('username') }}</span>
+    <!-- Hiển thị avatar và tên người dùng với liên kết đến trang thông tin -->
+    <div class="user-menu ms-3 d-flex align-items-center">
+        <a href="{{ route('user.profile', session('userId')) }}" class="d-flex align-items-center text-decoration-none">
+            <img src="{{ asset('clients/assets/images/team/avatauser.jpg') }}" 
+                 alt="User Avatar" 
+                 class="rounded-circle" 
+                 width="40" 
+                 height="40">
+            <span class="ms-2 fw-bold text-white">{{ session('username') }}</span>
+        </a>
 
-                            <!-- Nút Đăng xuất -->
-                            <form action="{{ route('logout') }}" method="POST" class="ms-3">
-                                @csrf
-                                <button type="submit" class="btn btn-danger btn-sm">Logout</button>
-                            </form>
-                        </div>
-                    @else
-                        <!-- Nút Login nếu chưa đăng nhập -->
-                        <a href="{{ url('/login') }}" class="login-btn ms-3">
-                            <i class="fas fa-user"></i> Login
-                        </a>
-                    @endif
+        <!-- Nút Đăng xuất -->
+        <form action="{{ route('logout') }}" method="POST" class="ms-3">
+            @csrf
+            <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+        </form>
+    </div>
+@else
+    <!-- Nút Login nếu chưa đăng nhập -->
+    <a href="{{ url('/login') }}" class="login-btn ms-3">
+        <i class="fas fa-user"></i> Login
+    </a>
+@endif
 
                     <!-- Menu Sidebar -->
                     <div class="menu-sidebar ms-3">

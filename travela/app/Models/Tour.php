@@ -52,4 +52,29 @@ class Tour extends Model
         
             return $tour;
         }
+        
+    /**
+     * Lấy danh sách review của tour
+     */
+     // Hàm lấy tất cả review của một tour
+     public function getReviewsForTour($id)
+     {
+         return DB::table('reviews')
+             ->join('user', 'reviews.userId', '=', 'user.userId')
+             ->where('reviews.tourId', $id)
+             ->orderBy('reviews.timestamp', 'desc')
+             ->select('reviews.comment', 'reviews.timestamp', 'user.userName') // Thay fullName bằng userName
+             ->get();
+     }
+ 
+     // Hàm thêm review mới vào database
+     public function addReview($tourId, $userId, $comment)
+     {
+         return DB::table('reviews')->insert([
+             'tourId' => $tourId,
+             'userId' => $userId,
+             'comment' => $comment,
+             'timestamp' => now()
+         ]);
+     }
 }

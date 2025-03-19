@@ -51,3 +51,8 @@ Route::get('/booking-success', function () {
 Route::get('/booking-success', [BookingController::class, 'showBookingSuccess'])->name('booking-success');
 Route::get('/invoice/{invoiceId}', [BookingController::class, 'showInvoice'])->name('invoice-detail');
 Route::get('/user-bookings', [BookingController::class, 'userBookings'])->name('user.bookings');
+
+Route::post('/tour/{id}/review', [TourDetailController::class, 'addReview'])->name('addReview');
+Route::get('/user/{id}', [LoginController::class, 'show'])->name('user.profile');
+Route::post('/user/{id}/update', [LoginController::class, 'updateProfile'])->name('user.update');
+

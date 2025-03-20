@@ -60,4 +60,11 @@ Route::post('/user/{id}/update', [LoginController::class, 'updateProfile'])->nam
 Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
 
 
+// Route cho trang admin
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+Route::get('/admin/tours', [AdminController::class, 'tours'])->name('admin.tours');
+Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+Route::get('/admin/bookings', [AdminController::class, 'bookings'])->name('admin.bookings');
+Route::get('/admin/comments', [AdminController::class, 'comments'])->name('admin.comments');
+Route::get('/admin/stats/tours', [AdminController::class, 'statsTours'])->name('admin.stats.tours');
+Route::get('/admin/stats/revenue', [AdminController::class, 'statsRevenue'])->name('admin.stats.revenue');

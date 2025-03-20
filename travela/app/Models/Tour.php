@@ -22,7 +22,7 @@ class Tour extends Model
             ->where('tourId', $tour->tourId)
             ->pluck('imageUrl')
             ->map(function ($image) {
-                return asset(str_replace('D:\\travela\\public\\', '', $image)); // Chuyển đổi đường dẫn
+                return asset(str_replace('travela\\public\\', '', $image)); // Chuyển đổi đường dẫn
             })
             ->toArray();
     }
@@ -41,7 +41,7 @@ class Tour extends Model
                     ->limit(5)
                     ->pluck('imageUrl')
                     ->map(function ($image) {
-                        return asset(str_replace('D:\\travela\\public\\', '', $image));
+                        return asset(str_replace('travela\\public\\', '', $image));
                     });
         
                 // Lấy danh sách timeline
@@ -93,7 +93,7 @@ class Tour extends Model
                 ->where('tourId', $tour->tourId)
                 ->pluck('imageUrl')
                 ->map(function ($image) {
-                    return asset(str_replace('D:\\travela\\public\\', '', $image));
+                    return asset(str_replace('travela\\public\\', '', $image));
                 })
                 ->toArray();
         }

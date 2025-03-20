@@ -61,32 +61,39 @@ class LoginController extends Controller
     {
         $username = $request->username_login;
         $password = $request->password_login;
-
+    
         if (empty($username) || empty($password)) {
             return redirect()->back()->with('error', 'Vui lòng nhập đầy đủ thông tin đăng nhập!');
         }
-
+    
         $user = $this->user->where('username', $username)->first();
-
+    
         if (!$user) {
             return redirect()->back()->with('error', 'Tên đăng nhập không tồn tại!');
         }
-
+    
+        // 🔴 Kiểm tra nếu user có `status = 'd'` hoặc `status = 'b'`
+        if ($user->status === 'd') {
+            return redirect()->back()->with('error', 'Tài khoản này đã bị xóa và không thể đăng nhập!');
+        }
+        if ($user->status === 'b') {
+            return redirect()->back()->with('error', 'Tài khoản này đã bị cấm, vui lòng liên hệ quản trị viên!');
+        }
+    
         if (!password_verify($password, $user->password)) {
             return redirect()->back()->with('error', 'Mật khẩu không chính xác!');
         }
-
+    
         // Lưu thông tin vào session
         $request->session()->put('userId', $user->userId);
         $request->session()->put('username', $username);
-        $request->session()->put('isAdmin', $user->isAdmin); // Lưu isAdmin vào session
+        $request->session()->put('isAdmin', $user->isAdmin);
         $request->session()->save();
-
-        // Kiểm tra nếu là admin thì chuyển hướng đến trang quản lý
+    
         if ($user->isAdmin) {
             return redirect()->route('admin.dashboard')->with('message', 'Đăng nhập thành công! Chào mừng Admin!');
         }
-
+    
         return redirect()->route('home')->with('message', 'Đăng nhập thành công!');
     }
 

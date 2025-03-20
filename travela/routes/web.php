@@ -56,3 +56,4 @@ Route::post('/tour/{id}/review', [TourDetailController::class, 'addReview'])->na
 Route::get('/user/{id}', [LoginController::class, 'show'])->name('user.profile');
 Route::post('/user/{id}/update', [LoginController::class, 'updateProfile'])->name('user.update');
 
+Route::get('/tours', [TourController::class, 'index'])->name('tours.index');

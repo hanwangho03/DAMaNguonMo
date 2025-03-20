@@ -13,13 +13,18 @@ class TourController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-   public function index()
+    public function index(Request $request)
     {
-        $title = 'Danh sách Tour';
         $tourModel = new Tour();
-        $tours = $tourModel->getAllTours(4); // Lấy danh sách tour có phân trang
-        //dd ($tours);
-        return view('clients.tours', compact('title', 'tours'));
+        $destination = $request->query('destination');
+
+        if ($destination) {
+            $tours = $tourModel->searchToursByDestination($destination);
+        } else {
+            $tours = $tourModel->getAllTours();
+        }
+
+        return view('clients.tours', compact('tours'));
     }
 
     /**

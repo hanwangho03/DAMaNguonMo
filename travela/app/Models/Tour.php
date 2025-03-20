@@ -77,4 +77,27 @@ class Tour extends Model
              'timestamp' => now()
          ]);
      }
+     public function searchToursByDestination($destination, $perPage = 4)
+    {
+        $query = DB::table($this->table)
+            ->where('availability', 1);
+
+        if (!empty($destination)) {
+            $query->where('destination', 'like', '%' . $destination . '%');
+        }
+
+        $tours = $query->paginate($perPage);
+
+        foreach ($tours as $tour) {
+            $tour->images = DB::table('images')
+                ->where('tourId', $tour->tourId)
+                ->pluck('imageUrl')
+                ->map(function ($image) {
+                    return asset(str_replace('D:\\travela\\public\\', '', $image));
+                })
+                ->toArray();
+        }
+
+        return $tours;
+    }
 }

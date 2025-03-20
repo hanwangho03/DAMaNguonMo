@@ -10,6 +10,7 @@ use App\Http\Controllers\clients\TravelGuidesController;
 use App\Http\Controllers\clients\LoginController;
 use App\Http\Controllers\clients\TourBookingController;
 use App\Http\Controllers\clients\BookingController;
+use App\Http\Controllers\admins\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,3 +58,6 @@ Route::get('/user/{id}', [LoginController::class, 'show'])->name('user.profile')
 Route::post('/user/{id}/update', [LoginController::class, 'updateProfile'])->name('user.update');
 
 Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
+
+
+Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');

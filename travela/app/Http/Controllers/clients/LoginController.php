@@ -49,6 +49,7 @@ class LoginController extends Controller
             'username' => $request->username_register,
             'email'    => $request->email_register,
             'password' => Hash::make($request->password_register),
+            'isAdmin'  => 0, // Mặc định không phải admin khi đăng ký
         ];
 
         $this->login->registerAcount($dataInsert);
@@ -75,9 +76,16 @@ class LoginController extends Controller
             return redirect()->back()->with('error', 'Mật khẩu không chính xác!');
         }
 
+        // Lưu thông tin vào session
         $request->session()->put('userId', $user->userId);
         $request->session()->put('username', $username);
+        $request->session()->put('isAdmin', $user->isAdmin); // Lưu isAdmin vào session
         $request->session()->save();
+
+        // Kiểm tra nếu là admin thì chuyển hướng đến trang quản lý
+        if ($user->isAdmin) {
+            return redirect()->route('admin.dashboard')->with('message', 'Đăng nhập thành công! Chào mừng Admin!');
+        }
 
         return redirect()->route('home')->with('message', 'Đăng nhập thành công!');
     }
@@ -108,7 +116,6 @@ class LoginController extends Controller
             return redirect()->back()->with('error', 'Bạn không có quyền chỉnh sửa thông tin này.');
         }
 
-        // Validate dữ liệu
         $request->validate([
             'email' => 'required|email|unique:user,email,' . $id . ',userId',
             'phoneNumber' => 'nullable|string|max:15',
@@ -126,7 +133,6 @@ class LoginController extends Controller
             'new_password.confirmed' => 'Mật khẩu xác nhận không khớp!',
         ]);
 
-        // Chuẩn bị dữ liệu để cập nhật
         $data = [
             'email' => $request->email,
             'phoneNumber' => $request->phoneNumber,
@@ -134,7 +140,6 @@ class LoginController extends Controller
             'updatedDate' => now(),
         ];
 
-        // Nếu có nhập mật khẩu mới
         if ($request->filled('new_password')) {
             if (!password_verify($request->old_password, $user->password)) {
                 return redirect()->back()->with('error', 'Mật khẩu cũ không chính xác!');
@@ -142,7 +147,6 @@ class LoginController extends Controller
             $data['password'] = Hash::make($request->new_password);
         }
 
-        // Cập nhật thông tin
         $this->user->updateUser($id, $data);
 
         return redirect()->back()->with('message', 'Cập nhật thông tin thành công!');

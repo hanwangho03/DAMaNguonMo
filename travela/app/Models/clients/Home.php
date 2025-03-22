@@ -20,7 +20,7 @@ class Home extends Model
                 ->where('tourId', $tour->tourId)
                 ->pluck('imageURL')
                 ->map(function ($image) {
-                    return str_replace('D:\travela\public\\', '', $image); // Chỉ giữ phần sau "public/"
+                    return str_replace('travela\public\\', '', $image); // Chỉ giữ phần sau "public/"
                 });
         }
     

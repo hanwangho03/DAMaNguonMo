@@ -11,6 +11,7 @@ use App\Http\Controllers\clients\LoginController;
 use App\Http\Controllers\clients\TourBookingController;
 use App\Http\Controllers\clients\BookingController;
 use App\Http\Controllers\admins\AdminController;
+use App\Http\Controllers\admins\AdminCommentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('home');
 // });
-Route   ::get("/home", [HomeController::class,'index'])->name('home'); 
+Route::get("/home", [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/tours', [TourController::class, 'index'])->name('tours');
 Route::get('/tour-guides', [TravelGuidesController::class, 'index'])->name('team');
@@ -68,3 +69,10 @@ Route::get('/admin/bookings', [AdminController::class, 'bookings'])->name('admin
 Route::get('/admin/comments', [AdminController::class, 'comments'])->name('admin.comments');
 Route::get('/admin/stats/tours', [AdminController::class, 'statsTours'])->name('admin.stats.tours');
 Route::get('/admin/stats/revenue', [AdminController::class, 'statsRevenue'])->name('admin.stats.revenue');
+
+
+// Route cho comment
+Route::get('comments', [AdminCommentController::class, 'index'])->name('admin.comments');
+Route::get('admin/comments', [AdminCommentController::class, 'index'])->name('admin.comments.index');
+Route::put('admin/comments/{id}/toggle', [AdminCommentController::class, 'toggle'])->name('admin.comments.toggle');
+Route::delete('/admin/comments/{comment}', [AdminCommentController::class, 'destroy'])->name('admin.comments.destroy');

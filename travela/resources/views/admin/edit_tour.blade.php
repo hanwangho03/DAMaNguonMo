@@ -8,6 +8,17 @@
         <div class="card shadow">
             <div class="card-header bg-warning text-white">
                 <h4 class="text-center mb-0">Cập Nhật Tour Du Lịch</h4>
+
+                <!-- Thông báo lỗi validation -->
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             </div>
             <div class="card-body">
                 <form action="{{ route('admin-update-tour', ['id' => $tour->tourId]) }}" method="POST" enctype="multipart/form-data">

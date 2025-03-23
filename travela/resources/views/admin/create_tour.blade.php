@@ -2,6 +2,17 @@
 
     <div class="container-fluid mt-4">
         <h2 class="text-center text-primary">Đây là trang thêm tour</h2>
+
+        <!-- Thông báo lỗi validation -->
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </div>
 
     <div class="container mt-5">

@@ -62,7 +62,7 @@ class TourController extends Controller
         }
 
         // Sử dụng Validator::make() thay vì $request->validate()
-        $request->validate([ 
+        $request->validate([
             'titlle'        => 'required|string|max:255',
             'description'   => 'required|string',
             'images'        => 'required|array|min:1',
@@ -76,7 +76,45 @@ class TourController extends Controller
             'reviews'       => 'nullable|string|max:255',
             'startDate'     => 'required|date|after_or_equal:today',
             'endDate'       => 'required|date|after:startDate'
+        ], [
+            'titlle.required'       => 'Tiêu đề không được để trống!',
+            'titlle.string'         => 'Tiêu đề phải là chuỗi!',
+            'titlle.max'            => 'Tiêu đề không được vượt quá 255 ký tự!',
+            'description.required'  => 'Mô tả không được để trống!',
+            'description.string'    => 'Mô tả phải là chuỗi!',
+            'images.required'       => 'Bạn cần tải lên ít nhất một ảnh!',
+            'images.array'          => 'Dữ liệu ảnh không hợp lệ!',
+            'images.min'            => 'Bạn cần tải lên ít nhất một ảnh!',
+            'images.*.image'        => 'Tệp tải lên phải là hình ảnh!',
+            'images.*.mimes'        => 'Hình ảnh phải có định dạng jpeg, png, jpg, gif hoặc svg!',
+            'images.*.max'          => 'Kích thước ảnh không được vượt quá 2MB!',
+            'quantity.required'     => 'Số lượng không được để trống!',
+            'quantity.integer'      => 'Số lượng phải là số nguyên!',
+            'quantity.min'          => 'Số lượng ít nhất phải là 1!',
+            'priceAdult.required'   => 'Giá vé người lớn không được để trống!',
+            'priceAdult.numeric'    => 'Giá vé người lớn phải là số!',
+            'priceAdult.min'        => 'Giá vé người lớn không thể âm!',
+            'priceChild.required'   => 'Giá vé trẻ em không được để trống!',
+            'priceChild.numeric'    => 'Giá vé trẻ em phải là số!',
+            'priceChild.min'        => 'Giá vé trẻ em không thể âm!',
+            'destination.required'  => 'Điểm đến không được để trống!',
+            'destination.string'    => 'Điểm đến phải là chuỗi!',
+            'destination.max'       => 'Điểm đến không được vượt quá 255 ký tự!',
+            'availability.required' => 'Trạng thái còn chỗ là bắt buộc!',
+            'availability.in'       => 'Trạng thái chỉ có thể là "on" hoặc "off"!',
+            'itinerary.required'    => 'Lịch trình không được để trống!',
+            'itinerary.string'      => 'Lịch trình phải là chuỗi!',
+            'itinerary.max'         => 'Lịch trình không được vượt quá 255 ký tự!',
+            'reviews.string'        => 'Đánh giá phải là chuỗi!',
+            'reviews.max'           => 'Đánh giá không được vượt quá 255 ký tự!',
+            'startDate.required'    => 'Ngày bắt đầu không được để trống!',
+            'startDate.date'        => 'Ngày bắt đầu không hợp lệ!',
+            'startDate.after_or_equal' => 'Ngày bắt đầu phải từ hôm nay trở đi!',
+            'endDate.required'      => 'Ngày kết thúc không được để trống!',
+            'endDate.date'          => 'Ngày kết thúc không hợp lệ!',
+            'endDate.after'         => 'Ngày kết thúc phải sau ngày bắt đầu!'
         ]);
+        
 
         // if ($validator->fails()) {
         //     Log::error('Lỗi validate:', $validator->errors()->toArray());
@@ -181,7 +219,7 @@ class TourController extends Controller
             return response()->json(['error' => 'Method not allowed'], 405);
         }
 
-        $request->validate([ 
+        $request->validate([
             'titlle'        => 'required|string|max:255',
             'description'   => 'required|string',
             'images.*'      => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -194,7 +232,42 @@ class TourController extends Controller
             'reviews'       => 'nullable|string|max:255',
             'startDate'     => 'required|date|after_or_equal:today',
             'endDate'       => 'required|date|after:startDate'
+        ], [
+            'titlle.required'       => 'Tiêu đề không được để trống!',
+            'titlle.string'         => 'Tiêu đề phải là chuỗi!',
+            'titlle.max'            => 'Tiêu đề không được vượt quá 255 ký tự!',
+            'description.required'  => 'Mô tả không được để trống!',
+            'description.string'    => 'Mô tả phải là chuỗi!',
+            'images.*.image'        => 'Tệp tải lên phải là hình ảnh!',
+            'images.*.mimes'        => 'Hình ảnh phải có định dạng jpeg, png, jpg, gif hoặc svg!',
+            'images.*.max'          => 'Kích thước ảnh không được vượt quá 2MB!',
+            'quantity.required'     => 'Số lượng không được để trống!',
+            'quantity.integer'      => 'Số lượng phải là số nguyên!',
+            'quantity.min'          => 'Số lượng ít nhất phải là 1!',
+            'priceAdult.required'   => 'Giá vé người lớn không được để trống!',
+            'priceAdult.numeric'    => 'Giá vé người lớn phải là số!',
+            'priceAdult.min'        => 'Giá vé người lớn không thể âm!',
+            'priceChild.required'   => 'Giá vé trẻ em không được để trống!',
+            'priceChild.numeric'    => 'Giá vé trẻ em phải là số!',
+            'priceChild.min'        => 'Giá vé trẻ em không thể âm!',
+            'destination.required'  => 'Điểm đến không được để trống!',
+            'destination.string'    => 'Điểm đến phải là chuỗi!',
+            'destination.max'       => 'Điểm đến không được vượt quá 255 ký tự!',
+            'availability.required' => 'Trạng thái còn chỗ là bắt buộc!',
+            'availability.in'       => 'Trạng thái chỉ có thể là "on" hoặc "off"!',
+            'itinerary.required'    => 'Lịch trình không được để trống!',
+            'itinerary.string'      => 'Lịch trình phải là chuỗi!',
+            'itinerary.max'         => 'Lịch trình không được vượt quá 255 ký tự!',
+            'reviews.string'        => 'Đánh giá phải là chuỗi!',
+            'reviews.max'           => 'Đánh giá không được vượt quá 255 ký tự!',
+            'startDate.required'    => 'Ngày bắt đầu không được để trống!',
+            'startDate.date'        => 'Ngày bắt đầu không hợp lệ!',
+            'startDate.after_or_equal' => 'Ngày bắt đầu phải từ hôm nay trở đi!',
+            'endDate.required'      => 'Ngày kết thúc không được để trống!',
+            'endDate.date'          => 'Ngày kết thúc không hợp lệ!',
+            'endDate.after'         => 'Ngày kết thúc phải sau ngày bắt đầu!'
         ]);
+        
 
         // if ($validator->fails()) {
         //     Log::error('Lỗi validate:', $validator->errors()->toArray());

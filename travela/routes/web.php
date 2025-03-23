@@ -10,17 +10,29 @@ use App\Http\Controllers\clients\LoginController;
 use App\Http\Controllers\clients\TourBookingController;
 use App\Http\Controllers\clients\BookingController;
 use App\Http\Controllers\admins\AdminController;
+
 use App\Http\Controllers\admins\AdminThongKeController;
 use Illuminate\Support\Facades\Route;
 
+
+use App\Http\Controllers\admins\AdminCommentController;
+
+use App\Http\Controllers\admins\AdminTourController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\admins\AdminUserController;
+use App\Http\Controllers\admins\AdminBookingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 */
 
-// Client routes
-Route::get('/home', [HomeController::class,'index'])->name('home'); 
+
+// Route::get('/', function () {
+//     return view('home');
+// });
+Route::get("/home", [HomeController::class, 'index'])->name('home');
+
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/tours', [TourController::class, 'index'])->name('tours');
 Route::get('/tour-guides', [TravelGuidesController::class, 'index'])->name('team');
@@ -55,12 +67,44 @@ Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
 
 // Admin routes
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-Route::get('/admin/tours', [AdminController::class, 'tours'])->name('admin.tours');
+
+Route::get('/admin/tours', [AdminTourController::class, 'tours'])->name('admin.tours');
 Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
-Route::get('/admin/bookings', [AdminController::class, 'bookings'])->name('admin.bookings');
+
 Route::get('/admin/comments', [AdminController::class, 'comments'])->name('admin.comments');
 Route::get('/admin/stats/tours', [AdminController::class, 'statsTours'])->name('admin.stats.tours');
 Route::get('/admin/stats/revenue', [AdminController::class, 'statsRevenue'])->name('admin.stats.revenue');
 
+
 // ➕ Biểu đồ tròn: Thống kê doanh thu theo tháng
 Route::get('/admin/thong-ke/doanh-thu', [AdminThongKeController::class, 'thongKeDoanhThu'])->name('admin.thongke.doanhthu');
+
+Route::prefix('admin')->group(function () {
+    Route::get('/users', [AdminUserController::class, 'index'])->name('admin.users.index');
+    Route::get('/users/create', [AdminUserController::class, 'create'])->name('admin.users.create');
+    Route::post('/users', [AdminUserController::class, 'store'])->name('admin.users.store');
+    Route::get('/users/{id}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/users/{id}', [AdminUserController::class, 'update'])->name('admin.users.update');
+    Route::delete('/users/{id}', [AdminUserController::class, 'destroy'])->name('admin.users.delete');
+});
+
+
+// Route cho comment
+Route::get('comments', [AdminCommentController::class, 'index'])->name('admin.comments');
+Route::get('admin/comments', [AdminCommentController::class, 'index'])->name('admin.comments.index');
+Route::put('admin/comments/{id}/toggle', [AdminCommentController::class, 'toggle'])->name('admin.comments.toggle');
+Route::delete('/admin/comments/{comment}', [AdminCommentController::class, 'destroy'])->name('admin.comments.destroy');
+
+Route::get('/admin/create_tour', [TourController::class, 'create'])->name('admin-create-tour');
+Route::post('/admin/store_tour', [TourController::class, 'store'])->name('admin-store-tour');
+Route::get('/admin/edit_tour/{id}', [TourController::class, 'edit'])->name('admin-edit-tour');
+Route::put('/admin/update_tour/{id}', [TourController::class, 'update'])->name('admin-update-tour');
+Route::get('/admin/delete_tour/{id}', [TourController::class, 'destroy'])->name('admin-delete-tour');
+
+//route booking
+Route::prefix('admin')->group(function () {
+    Route::get('/bookings', [AdminBookingController::class, 'index'])->name('admin.bookings.index');
+    Route::post('/bookings/{id}/update-status', [AdminBookingController::class, 'updateStatus'])->name('admin.bookings.updateStatus');
+    Route::delete('/bookings/{id}', [AdminBookingController::class, 'destroy'])->name('admin.bookings.destroy');
+});
+

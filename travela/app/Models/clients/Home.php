@@ -12,9 +12,10 @@ class Home extends Model
     protected $table = 'tour';
     protected $primaryKey = 'tourId'; // Định nghĩa khóa chính
 
-    public function getHomeTours() {
+    public function getHomeTours()
+    {
         $tours = DB::table('tour')->get();
-    
+
         foreach ($tours as $tour) {
             $tour->images = DB::table('images')
                 ->where('tourId', $tour->tourId)
@@ -23,7 +24,7 @@ class Home extends Model
                     return str_replace('travela\public\\', '', $image); // Chỉ giữ phần sau "public/"
                 });
         }
-    
+
         return $tours;
     }
 }

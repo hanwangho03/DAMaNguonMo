@@ -11,6 +11,9 @@ use App\Http\Controllers\clients\LoginController;
 use App\Http\Controllers\clients\TourBookingController;
 use App\Http\Controllers\clients\BookingController;
 use App\Http\Controllers\admins\AdminController;
+
+use App\Http\Controllers\admins\AdminCommentController;
+
 use App\Http\Controllers\admins\AdminTourController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admins\AdminUserController;
@@ -28,7 +31,7 @@ use App\Http\Controllers\admins\AdminUserController;
 // Route::get('/', function () {
 //     return view('home');
 // });
-Route   ::get("/home", [HomeController::class,'index'])->name('home'); 
+Route::get("/home", [HomeController::class, 'index'])->name('home');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/tours', [TourController::class, 'index'])->name('tours');
 Route::get('/tour-guides', [TravelGuidesController::class, 'index'])->name('team');
@@ -80,6 +83,12 @@ Route::prefix('admin')->group(function () {
     Route::delete('/users/{id}', [AdminUserController::class, 'destroy'])->name('admin.users.delete');
 });
 
+
+// Route cho comment
+Route::get('comments', [AdminCommentController::class, 'index'])->name('admin.comments');
+Route::get('admin/comments', [AdminCommentController::class, 'index'])->name('admin.comments.index');
+Route::put('admin/comments/{id}/toggle', [AdminCommentController::class, 'toggle'])->name('admin.comments.toggle');
+Route::delete('/admin/comments/{comment}', [AdminCommentController::class, 'destroy'])->name('admin.comments.destroy');
 
 Route::get('/admin/create_tour', [TourController::class, 'create'])->name('admin-create-tour');
 Route::post('/admin/store_tour', [TourController::class, 'store'])->name('admin-store-tour');

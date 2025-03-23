@@ -12,7 +12,7 @@ use App\Http\Controllers\clients\TourBookingController;
 use App\Http\Controllers\clients\BookingController;
 use App\Http\Controllers\admins\AdminController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\admins\AdminUserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -63,8 +63,16 @@ Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
 // Route cho trang admin
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 Route::get('/admin/tours', [AdminController::class, 'tours'])->name('admin.tours');
-Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
 Route::get('/admin/bookings', [AdminController::class, 'bookings'])->name('admin.bookings');
 Route::get('/admin/comments', [AdminController::class, 'comments'])->name('admin.comments');
 Route::get('/admin/stats/tours', [AdminController::class, 'statsTours'])->name('admin.stats.tours');
 Route::get('/admin/stats/revenue', [AdminController::class, 'statsRevenue'])->name('admin.stats.revenue');
+
+Route::prefix('admin')->group(function () {
+    Route::get('/users', [AdminUserController::class, 'index'])->name('admin.users.index');
+    Route::get('/users/create', [AdminUserController::class, 'create'])->name('admin.users.create');
+    Route::post('/users', [AdminUserController::class, 'store'])->name('admin.users.store');
+    Route::get('/users/{id}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/users/{id}', [AdminUserController::class, 'update'])->name('admin.users.update');
+    Route::delete('/users/{id}', [AdminUserController::class, 'destroy'])->name('admin.users.delete');
+});

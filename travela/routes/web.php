@@ -12,7 +12,7 @@ use App\Http\Controllers\clients\BookingController;
 use App\Http\Controllers\admins\AdminController;
 
 use App\Http\Controllers\admins\AdminThongKeController;
-use Illuminate\Support\Facades\Route;
+
 
 
 use App\Http\Controllers\admins\AdminCommentController;

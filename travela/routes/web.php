@@ -17,6 +17,7 @@ use App\Http\Controllers\admins\AdminCommentController;
 use App\Http\Controllers\admins\AdminTourController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admins\AdminUserController;
+use App\Http\Controllers\admins\AdminBookingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -69,7 +70,7 @@ Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('adm
 
 Route::get('/admin/tours', [AdminTourController::class, 'tours'])->name('admin.tours');
 Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
-Route::get('/admin/bookings', [AdminController::class, 'bookings'])->name('admin.bookings');
+
 Route::get('/admin/comments', [AdminController::class, 'comments'])->name('admin.comments');
 Route::get('/admin/stats/tours', [AdminController::class, 'statsTours'])->name('admin.stats.tours');
 Route::get('/admin/stats/revenue', [AdminController::class, 'statsRevenue'])->name('admin.stats.revenue');
@@ -96,3 +97,9 @@ Route::get('/admin/edit_tour/{id}', [TourController::class, 'edit'])->name('admi
 Route::put('/admin/update_tour/{id}', [TourController::class, 'update'])->name('admin-update-tour');
 Route::get('/admin/delete_tour/{id}', [TourController::class, 'destroy'])->name('admin-delete-tour');
 
+//route booking
+Route::prefix('admin')->group(function () {
+    Route::get('/bookings', [AdminBookingController::class, 'index'])->name('admin.bookings.index');
+    Route::post('/bookings/{id}/update-status', [AdminBookingController::class, 'updateStatus'])->name('admin.bookings.updateStatus');
+    Route::delete('/bookings/{id}', [AdminBookingController::class, 'destroy'])->name('admin.bookings.destroy');
+});

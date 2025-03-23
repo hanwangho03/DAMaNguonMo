@@ -11,6 +11,7 @@ use App\Http\Controllers\clients\LoginController;
 use App\Http\Controllers\clients\TourBookingController;
 use App\Http\Controllers\clients\BookingController;
 use App\Http\Controllers\admins\AdminController;
+use App\Http\Controllers\admins\AdminTourController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admins\AdminUserController;
 /*
@@ -62,7 +63,9 @@ Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
 
 // Route cho trang admin
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-Route::get('/admin/tours', [AdminController::class, 'tours'])->name('admin.tours');
+
+Route::get('/admin/tours', [AdminTourController::class, 'tours'])->name('admin.tours');
+Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
 Route::get('/admin/bookings', [AdminController::class, 'bookings'])->name('admin.bookings');
 Route::get('/admin/comments', [AdminController::class, 'comments'])->name('admin.comments');
 Route::get('/admin/stats/tours', [AdminController::class, 'statsTours'])->name('admin.stats.tours');
@@ -76,3 +79,11 @@ Route::prefix('admin')->group(function () {
     Route::put('/users/{id}', [AdminUserController::class, 'update'])->name('admin.users.update');
     Route::delete('/users/{id}', [AdminUserController::class, 'destroy'])->name('admin.users.delete');
 });
+
+
+Route::get('/admin/create_tour', [TourController::class, 'create'])->name('admin-create-tour');
+Route::post('/admin/store_tour', [TourController::class, 'store'])->name('admin-store-tour');
+Route::get('/admin/edit_tour/{id}', [TourController::class, 'edit'])->name('admin-edit-tour');
+Route::put('/admin/update_tour/{id}', [TourController::class, 'update'])->name('admin-update-tour');
+Route::get('/admin/delete_tour/{id}', [TourController::class, 'destroy'])->name('admin-delete-tour');
+

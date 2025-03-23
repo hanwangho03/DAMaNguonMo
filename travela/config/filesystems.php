@@ -56,6 +56,13 @@ return [
             'throw' => false,
         ],
 
+        'public_tours' => [
+            'driver' => 'local',
+            'root' => public_path('clients/assets/images/gallery-tours'),
+            'url' => env('APP_URL').'/clients/assets/images/gallery-tours',
+            'visibility' => 'public',
+        ],
+
     ],
 
     /*

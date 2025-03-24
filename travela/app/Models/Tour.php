@@ -63,8 +63,9 @@ class Tour extends Model
          return DB::table('reviews')
              ->join('user', 'reviews.userId', '=', 'user.userId')
              ->where('reviews.tourId', $id)
+             ->where('reviews.hidden', 0) // Thêm điều kiện này
              ->orderBy('reviews.timestamp', 'desc')
-             ->select('reviews.comment', 'reviews.timestamp', 'user.userName') // Thay fullName bằng userName
+             ->select('reviews.comment', 'reviews.timestamp', 'user.userName')
              ->get();
      }
  
@@ -243,5 +244,44 @@ class Tour extends Model
         return DB::table($this->table)->where('tourId', $id)->update([
             'availability' => false
         ]);
+    }
+    public function getPopularDestinations($limit = 6)
+    {
+        // Lấy danh sách destinations duy nhất từ bảng tour
+        $destinations = DB::table($this->table)
+            ->select('destination')
+            ->where('availability', 1)
+            ->groupBy('destination')
+            ->limit($limit)
+            ->get();
+    
+        // Thêm thông tin tourId, ảnh và số lượng tours
+        foreach ($destinations as $destination) {
+            $tour = DB::table($this->table)
+                ->where('destination', $destination->destination)
+                ->where('availability', 1)
+                ->first();
+    
+            if ($tour) {
+                $destination->tourId = $tour->tourId; // Thêm tourId
+                $destination->image = DB::table('images')
+                    ->where('tourId', $tour->tourId)
+                    ->pluck('imageUrl')
+                    ->map(function ($image) {
+                        return asset(str_replace('travela\\public\\', '', $image));
+                    })
+                    ->first();
+                $destination->tourCount = DB::table($this->table)
+                    ->where('destination', $destination->destination)
+                    ->where('availability', 1)
+                    ->count();
+            } else {
+                $destination->tourId = null;
+                $destination->image = asset('clients/assets/images/destinations/default.jpg');
+                $destination->tourCount = 0;
+            }
+        }
+    
+        return $destinations;
     }
 }

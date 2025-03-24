@@ -5,12 +5,15 @@ namespace App\Http\Controllers\clients;
 use App\Http\Controllers\Controller;
 use App\Models\clients\Home;
 use Illuminate\Http\Request;
+use App\Models\Tour;
 
 class HomeController extends Controller
 {
     private $homeTours;
+    private $tourModel;
     public function __construct(){
         $this->homeTours = new Home();
+        $this->tourModel = new Tour();
     }
     /**
      * Display a listing of the resource.
@@ -21,7 +24,9 @@ class HomeController extends Controller
     {
         $tours = $this->homeTours->getHomeTours();
         //dd ($tours);
-        return view("clients.home", compact('tours'));
+        $destinations = $this->tourModel->getPopularDestinations();
+
+        return view("clients.home", compact('tours', 'destinations'));
     }
 
     /**

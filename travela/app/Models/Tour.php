@@ -63,8 +63,9 @@ class Tour extends Model
          return DB::table('reviews')
              ->join('user', 'reviews.userId', '=', 'user.userId')
              ->where('reviews.tourId', $id)
+             ->where('reviews.hidden', 0) // Thêm điều kiện này
              ->orderBy('reviews.timestamp', 'desc')
-             ->select('reviews.comment', 'reviews.timestamp', 'user.userName') // Thay fullName bằng userName
+             ->select('reviews.comment', 'reviews.timestamp', 'user.userName')
              ->get();
      }
  

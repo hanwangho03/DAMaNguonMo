@@ -16,25 +16,19 @@ class TourDetailController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index($id)
-    {
-        $tourModel = new Tour();
-        $tourDetail = $tourModel->getTourDetail($id);
+{
+    $tourModel = new Tour();
+    $tourDetail = $tourModel->getTourDetail($id);
 
-        if (!$tourDetail) {
-            return abort(404);
-        }
-
-        // Lấy danh sách đánh giá của tour
-        $reviews = $this->getReviews($id);
-
-        // Lấy danh sách đánh giá của tour (đã lọc hidden)
-        $reviews = Review::where('tourId', $id)
-            ->where('hidden', 0)
-            ->orderBy('timestamp', 'desc')
-            ->get();
-        // Trả về view với cả tourDetail và reviews
-        return view("clients.tour-details", compact("tourDetail", "reviews"));
+    if (!$tourDetail) {
+        return abort(404);
     }
+
+    // Chỉ dùng getReviews
+    $reviews = $this->getReviews($id);
+
+    return view("clients.tour-details", compact("tourDetail", "reviews"));
+}
     public function getReviews($id)
     {
         $tour = new Tour();

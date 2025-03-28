@@ -35,7 +35,7 @@
                         <a class="nav-link" href="{{ route('admin.comments') }}"><i class="fas fa-comments me-1"></i> Quản lý Comment</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.stats.tours') }}"><i class="fas fa-star me-1"></i> Thống kê Tour Yêu Thích</a>
+                        <a class="nav-link" href="{{ route('admin.stats_tours') }}"><i class="fas fa-star me-1"></i> Thống kê Đặt Tour</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.stats.revenue') }}"><i class="fas fa-chart-line me-1"></i> Thống kê Doanh Thu</a>

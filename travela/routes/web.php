@@ -11,6 +11,7 @@ use App\Http\Controllers\clients\LoginController;
 use App\Http\Controllers\clients\TourBookingController;
 use App\Http\Controllers\clients\BookingController;
 use App\Http\Controllers\admins\AdminController;
+use App\Http\Controllers\admins\AdminThongKeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -66,5 +67,11 @@ Route::get('/admin/tours', [AdminController::class, 'tours'])->name('admin.tours
 Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
 Route::get('/admin/bookings', [AdminController::class, 'bookings'])->name('admin.bookings');
 Route::get('/admin/comments', [AdminController::class, 'comments'])->name('admin.comments');
-Route::get('/admin/stats/tours', [AdminController::class, 'statsTours'])->name('admin.stats.tours');
+
 Route::get('/admin/stats/revenue', [AdminController::class, 'statsRevenue'])->name('admin.stats.revenue');
+
+
+// Route thống kê Tour được đặt nhiều nhất
+Route::get('/admin/stats/tours', [AdminThongKeController::class, 'showMostBookedTours'])->name('admin.stats_tours');
+
+

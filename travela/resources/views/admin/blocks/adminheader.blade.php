@@ -26,10 +26,10 @@
                         <a class="nav-link" href="{{ route('admin.tours') }}"><i class="fas fa-plane-departure me-1"></i> Quản lý Tour</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.users') }}"><i class="fas fa-users me-1"></i> Quản lý User</a>
+                        <a class="nav-link" href="{{ route('admin.users.index') }}"><i class="fas fa-users me-1"></i> Quản lý User</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('admin.bookings') }}"><i class="fas fa-ticket-alt me-1"></i> Quản lý Booking</a>
+                    <a class="nav-link active" href="{{ route('admin.bookings.index') }}"><i class="fas fa-ticket-alt me-1"></i> Quản lý Booking</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.comments') }}"><i class="fas fa-comments me-1"></i> Quản lý Comment</a>

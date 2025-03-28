@@ -65,9 +65,6 @@ Route::post('/user/{id}/update', [LoginController::class, 'updateProfile'])->nam
 // Duplicate (but valid) tours index route
 Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
 
-
-
-
 // Admin routes (bắt đầu phân quyền )
 Route::middleware(['adminSession'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
@@ -111,6 +108,8 @@ Route::middleware(['adminSession'])->group(function () {
         Route::post('/bookings/{id}/update-status', [AdminBookingController::class, 'updateStatus'])->name('admin.bookings.updateStatus');
         Route::delete('/bookings/{id}', [AdminBookingController::class, 'destroy'])->name('admin.bookings.destroy');
     });
+    // thong ke booking tourtour
+    Route::get('/admin/stats/tours', [AdminThongKeController::class, 'showMostBookedTours'])->name('admin.stats_tours');
 
 });
 // Admin routes (kết thúc phân quyền )

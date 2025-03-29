@@ -65,7 +65,7 @@
                                 <a href="#" class="heart"><i class="fas fa-heart"></i></a>
                                 <a href="{{ route('tour-detail', ['id' => $tour->tourId]) }}">
                                     <img src="{{ $tour->images[0] ?? asset('clients/assets/images/default.jpg') }}"
-                                        alt="Destination">
+                                        alt="Destination" class="tour-image">
                                 </a>
                             </div>
                             <div class="content">
@@ -180,4 +180,26 @@
     .form-select:not(.select2-hidden-accessible) {
         display: none !important;
     }
+    .destination-item .image {
+    position: relative;
+    width: 100%;
+    height: 200px; /* Chiều cao cố định cho tất cả ảnh */
+    overflow: hidden; /* Ẩn phần ảnh vượt quá kích thước */
+}
+
+.destination-item .image img.tour-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Đảm bảo ảnh được cắt và lấp đầy khung mà không bị méo */
+    display: block;
+}
+
+.destination-item .heart {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    color: #fff;
+    font-size: 20px;
+}
 </style>

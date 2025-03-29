@@ -13,7 +13,7 @@ class Booking extends Model
 
     protected $primaryKey = 'bookingId'; // Khóa chính
 
-    public $timestamps = false; // Nếu bảng không có cột `created_at` và `updated_at`
+    public $timestamps = false; // Nếu bảng không có `created_at` và `updated_at`
 
     protected $fillable = [
         'tourId',
@@ -23,11 +23,19 @@ class Booking extends Model
         'numChild',
         'totalPrice',
         'bookingStatus',
-        'specialRequestes',
+        'specialRequests', // Sửa lại tên cho đúng
         'email',
         'phoneNumber',
         'address',
         'fullName'
+    ];
+
+    protected $casts = [
+        'bookingDate' => 'date',
+        'totalPrice' => 'double',
+        'numAdult' => 'integer',
+        'numChild' => 'integer',
+        'specialRequests' => 'string',
     ];
 
     // Quan hệ với bảng Tour

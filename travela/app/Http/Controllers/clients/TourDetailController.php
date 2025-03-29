@@ -5,7 +5,9 @@ namespace App\Http\Controllers\clients;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Tour;
+use App\Models\Review;
 use Illuminate\Support\Facades\Session;
+
 class TourDetailController extends Controller
 {
     /**
@@ -14,29 +16,25 @@ class TourDetailController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index($id)
-    {
-        $tourModel = new Tour();
-        $tourDetail = $tourModel->getTourDetail($id);
+{
+    $tourModel = new Tour();
+    $tourDetail = $tourModel->getTourDetail($id);
 
-        if (!$tourDetail) {
-            return abort(404);
-        }
-
-        // Lấy danh sách đánh giá của tour
-        $reviews = $this->getReviews($id);
-
-        // Debug để kiểm tra dữ liệu (nếu cần)
-        // dd($tourDetail, $reviews);
-
-        // Trả về view với cả tourDetail và reviews
-        return view("clients.tour-details", compact("tourDetail", "reviews"));
+    if (!$tourDetail) {
+        return abort(404);
     }
-public function getReviews($id)
+
+    // Chỉ dùng getReviews
+    $reviews = $this->getReviews($id);
+
+    return view("clients.tour-details", compact("tourDetail", "reviews"));
+}
+    public function getReviews($id)
     {
         $tour = new Tour();
         return $tour->getReviewsForTour($id); // Gọi hàm từ model
     }
-public function addReview(Request $request, $id)
+    public function addReview(Request $request, $id)
     {
         $userId = session('userId');
         if (!$userId) {

@@ -98,7 +98,6 @@ class LoginController extends Controller
                 'email'    => $googleUser['email'],
                 'password' => bcrypt('google_auth_no_password'),
                 'isAdmin'  => 0,
-                'status'   => 'a', // Active
             ]);
         }
     

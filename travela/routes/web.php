@@ -40,6 +40,8 @@ Route::get('/tour/{id}', [TourDetailController::class, 'index'])->name('tour-det
 Route::get('/destination', [DestinationController::class, 'index'])->name('destination');
 
 // Login & Register
+Route::get('/auth/google/callback', [LoginController::class, 'handleGoogleCallback']);
+
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/register', [LoginController::class, 'register'])->name('register');
 Route::post('/login', [LoginController::class, 'login'])->name('user-login');

@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Login;
 use App\Models\Users;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     private $login;
@@ -56,6 +57,64 @@ class LoginController extends Controller
 
         return redirect()->back()->with('message', 'Đăng ký thành công! Vui lòng đăng nhập.');
     }
+    
+    public function handleGoogleCallback(Request $request)
+    {
+        $code = $request->get('code');
+    
+        if (!$code) {
+            return redirect()->route('login')->with('error', 'Đăng nhập Google thất bại!');
+        }
+    
+        // Gửi yêu cầu lấy access token từ Google
+        $response = Http::asForm()->post('https://oauth2.googleapis.com/token', [
+            'client_id'     => env('GOOGLE_CLIENT_ID'),
+            'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+            'redirect_uri'  => env('GOOGLE_REDIRECT_URI'),
+            'grant_type'    => 'authorization_code',
+            'code'          => $code,
+        ]);
+    
+        $token = $response->json()['access_token'] ?? null;
+    
+        if (!$token) {
+            return redirect()->route('login')->with('error', 'Không thể lấy token từ Google!');
+        }
+    
+        // Lấy thông tin user từ Google
+        $googleUser = Http::withToken($token)->get('https://www.googleapis.com/oauth2/v2/userinfo')->json();
+    
+        if (!$googleUser || !isset($googleUser['email'])) {
+            return redirect()->route('login')->with('error', 'Không thể lấy thông tin từ Google!');
+        }
+    
+        // Kiểm tra xem user đã tồn tại chưa
+        $user = Users::where('email', $googleUser['email'])->first();
+    
+        if (!$user) {
+            // Nếu chưa có, tạo tài khoản mới
+            $user = Users::create([
+                'username' => $googleUser['name'],
+                'email'    => $googleUser['email'],
+                'password' => bcrypt('google_auth_no_password'),
+                'isAdmin'  => 0,
+                'status'   => 'a', // Active
+            ]);
+        }
+    
+        // Đăng nhập user
+        Auth::login($user);
+    
+        // 🔴 Lưu thông tin user vào session
+        session([
+            'userId'   => $user->userId, 
+            'username' => $user->username,
+            'isAdmin'  => $user->isAdmin
+        ]);
+    
+        return redirect()->route('home')->with('message', 'Đăng nhập Google thành công!');
+    }
+    
 
     public function login(Request $request)
     {

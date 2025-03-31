@@ -2,10 +2,18 @@
 @include('clients.blocks.banner')
 
 <section class="container" style="margin: 50px auto; max-width: 1200px;">
-    <<form action="{{ route('store-booking') }}" method="POST" class="booking-container">
-        @csrf
-        <input type="hidden" name="tourId" value="{{ $tour->tourId  }}">
+    <!-- Hiển thị thông báo nếu có -->
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
 
+    <form action="{{ route('store-booking') }}" method="POST" class="booking-container">
+        @csrf
+        <input type="hidden" name="tourId" value="{{ $tour->tourId }}">
+
+        <!-- Phần còn lại của form giữ nguyên -->
         <div class="booking-wrapper">
             <!-- Left Column: Contact Information and Privacy -->
             <div class="left-column">
@@ -15,35 +23,43 @@
                     <div class="booking__infor">
                         <div class="form-group">
                             <label for="username">Họ và tên*</label>
-                            <input type="text" id="username" name="fullName" value="{{ old('fullName') }}" required>
+                            <input type="text" id="username" name="fullName" value="{{ old('fullName', $user->fullName ?? '') }}" required>
+                           .@error('fullName')
+                                <span class="error-message">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="email">Email*</label>
-                            <input type="text" id="email" name="email" value="{{ old('email') }}" required>
+                            <input type="email" id="email" name="email" value="{{ old('email', $user->email ?? '') }}" required>
+                            @error('email')
+                                <span class="error-message">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="tel">Số điện thoại*</label>
-                            <input type="number" id="tel" name="phoneNumber" value="{{ old('phoneNumber') }}" required>
+                            <input type="number" id="tel" name="phoneNumber" value="{{ old('phoneNumber', $user->phoneNumber ?? '') }}" required>
+                            @error('phoneNumber')
+                                <span class="error-message">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="address">Địa chỉ*</label>
-                            <input type="text" id="address" name="address" value="{{ old('address') }}" required>
+                            <input type="text" id="address" name="address" value="{{ old('address', $user->address ?? '') }}" required>
+                            @error('address')
+                                <span class="error-message">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                 </div>
                 <!-- Privacy Agreement Section -->
                 <div class="privacy-section card">
                     <h3 class="privacy-header">Điều Khoản Dịch Vụ</h3>
-                    <p class="privacy-text">Bằng cách nhấp vào nút "Đồng Ý" dưới đây, quý khách xác nhận đã đọc và đồng
-                        ý với các điều kiện điều khoản dịch vụ của Travela. Vui lòng xem chi tiết <a href="#"
-                            target="_blank" class="terms-link">tại đây</a>.</p>
+                    <p class="privacy-text">Bằng cách nhấp vào nút "Đồng Ý" dưới đây, quý khách xác nhận đã đọc và đồng ý với các điều kiện điều khoản dịch vụ của Travela. Vui lòng xem chi tiết <a href="#" target="_blank" class="terms-link">tại đây</a>.</p>
                     <div class="privacy-checkbox">
                         <input type="checkbox" id="agree" name="agree" checked>
-                        <label for="agree" class="checkbox-label">Tôi đã đọc và đồng ý với <a href="#" target="_blank"
-                                class="terms-link">Điều khoản thanh toán</a></label>
+                        <label for="agree" class="checkbox-label">Tôi đã đọc và đồng ý với <a href="#" target="_blank" class="terms-link">Điều khoản thanh toán</a></label>
                     </div>
-                    <p class="error-message" id="agree-error" style="display: none;">Vui lòng đồng ý với điều khoản dịch
-                        vụ để tiếp tục thanh toán.</p>
+                    <p class="error-message" id="agree-error" style="display: none;">Vui lòng đồng ý với điều khoản dịch vụ để tiếp tục thanh toán.</p>
                 </div>
             </div>
 
@@ -52,7 +68,7 @@
                 <div class="summary-section">
                     <div class="tour-info">
                         <p>Mã tour: {{ $tour->tourId }}</p>
-                        <h5 class="widget-title">{{ $tour->titlle }}</h5> <!-- Sửa thành $tour->title nếu cần -->
+                        <h5 class="widget-title">{{ $tour->titlle }}</h5>
                         <p>Ngày khởi hành: {{ $tour->startDate }}</p>
                         <p>Ngày kết thúc: {{ $tour->endDate }}</p>
                     </div>
@@ -61,21 +77,17 @@
                         <div class="summary-item">
                             <span>Người lớn:</span>
                             <div>
-                                <input type="number" name="numAdult" id="numAdult" value="1" min="1"
-                                    class="quantity-input">
+                                <input type="number" name="numAdult" id="numAdult" value="1" min="1" class="quantity-input">
                                 <span>x</span>
-                                <span class="price" id="adultPrice">{{ number_format($tour->priceAdult, 0, ',', '.') }}
-                                    VNĐ</span>
+                                <span class="price" id="adultPrice">{{ number_format($tour->priceAdult, 0, ',', '.') }} VNĐ</span>
                             </div>
                         </div>
                         <div class="summary-item">
                             <span>Trẻ em:</span>
                             <div>
-                                <input type="number" name="numChild" id="numChild" value="0" min="0"
-                                    class="quantity-input">
+                                <input type="number" name="numChild" id="numChild" value="0" min="0" class="quantity-input">
                                 <span>x</span>
-                                <span class="price" id="childPrice">{{ number_format($tour->priceChild, 0, ',', '.') }}
-                                    VNĐ</span>
+                                <span class="price" id="childPrice">{{ number_format($tour->priceChild, 0, ',', '.') }} VNĐ</span>
                             </div>
                         </div>
                         <div class="summary-item total">
@@ -86,17 +98,33 @@
                     </div>
 
                     <div class="button-group">
-                        <a href="{{ route('tour-detail', ['id' => $tour->tourId]) }}" class="booking-btn btn-cancel">Hủy
-                            Thanh Toán</a>
+                        <a href="{{ route('tour-detail', ['id' => $tour->tourId]) }}" class="booking-btn btn-cancel">Hủy Thanh Toán</a>
                         <button type="submit" class="booking-btn btn-pay">Thanh Toán</button>
+                        <button type="button" class="booking-btn btn-vnpay">Thanh Toán bằng VNPay</button>
                     </div>
                 </div>
             </div>
         </div>
     </form>
+
+    <!-- Form ẩn để gửi dữ liệu đến route pay-with-vnpay -->
+    <form id="vnpay-form" action="{{ route('pay-with-vnpay') }}" method="POST" style="display: none;">
+        @csrf
+        <input type="hidden" name="tourId" value="{{ $tour->tourId }}">
+        <input type="hidden" name="numAdult" id="vnpay-numAdult">
+        <input type="hidden" name="numChild" id="vnpay-numChild">
+        <input type="hidden" name="totalPrice" id="vnpay-totalPrice">
+        <input type="hidden" name="fullName" id="vnpay-fullName">
+        <input type="hidden" name="email" id="vnpay-email">
+        <input type="hidden" name="phoneNumber" id="vnpay-phoneNumber">
+        <input type="hidden" name="address" id="vnpay-address">
+    </form>
 </section>
 
+@include('clients.blocks.footer')
+
 <script>
+    // Hàm tính tổng giá
     function updateTotalPrice() {
         let numAdult = parseInt(document.getElementById("numAdult").value) || 0;
         let numChild = parseInt(document.getElementById("numChild").value) || 0;
@@ -108,26 +136,49 @@
         document.getElementById("totalPriceInput").value = total;
     }
 
+    // Hàm bật/tắt nút "Thanh toán" và "Thanh toán bằng VNPay" dựa trên checkbox điều khoản
     function togglePayButton() {
         let agreeCheckbox = document.getElementById("agree");
         let payButton = document.querySelector(".btn-pay");
+        let vnpayButton = document.querySelector(".btn-vnpay");
         let errorMessage = document.getElementById("agree-error");
 
         if (!agreeCheckbox.checked) {
             payButton.disabled = true;
+            vnpayButton.disabled = true; // Tắt nút VNPay
             errorMessage.style.display = "block"; // Hiển thị thông báo
         } else {
             payButton.disabled = false;
+            vnpayButton.disabled = false; // Bật nút VNPay
             errorMessage.style.display = "none"; // Ẩn thông báo
         }
     }
 
+    // Hàm đồng bộ dữ liệu từ form chính sang form VNPay
+    function syncVNPayForm() {
+        document.getElementById("vnpay-numAdult").value = document.getElementById("numAdult").value;
+        document.getElementById("vnpay-numChild").value = document.getElementById("numChild").value;
+        document.getElementById("vnpay-totalPrice").value = document.getElementById("totalPriceInput").value;
+        document.getElementById("vnpay-fullName").value = document.getElementById("username").value;
+        document.getElementById("vnpay-email").value = document.getElementById("email").value;
+        document.getElementById("vnpay-phoneNumber").value = document.getElementById("tel").value;
+        document.getElementById("vnpay-address").value = document.getElementById("address").value;
+    }
+
+    // Thêm sự kiện cho các input
     document.getElementById("numAdult").addEventListener("change", updateTotalPrice);
     document.getElementById("numChild").addEventListener("change", updateTotalPrice);
     document.getElementById("agree").addEventListener("change", togglePayButton);
 
-    updateTotalPrice(); // Gọi khi tải trang
-    togglePayButton();  // Gọi khi tải trang
+    // Thêm sự kiện cho nút "Thanh toán bằng VNPay"
+    document.querySelector(".btn-vnpay").addEventListener("click", function () {
+        syncVNPayForm(); // Đồng bộ dữ liệu trước khi gửi
+        document.getElementById("vnpay-form").submit(); // Gửi form VNPay
+    });
+
+    // Gọi các hàm khi tải trang
+    updateTotalPrice();
+    togglePayButton();
 </script>
 
 @include('clients.blocks.footer')
@@ -354,5 +405,9 @@
 .terms-link:hover {
     text-decoration: underline;
     color: #0056b3;
+}
+.btn-vnpay {
+    background-color: #007bff;
+    color: white;
 }
 </style>

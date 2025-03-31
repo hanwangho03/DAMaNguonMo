@@ -57,6 +57,8 @@ Route::get('/booking-success', [BookingController::class, 'showBookingSuccess'])
 Route::get('/invoice/{invoiceId}', [BookingController::class, 'showInvoice'])->name('invoice-detail');
 Route::get('/user-bookings', [BookingController::class, 'userBookings'])->name('user.bookings');
 
+Route::post('/pay-with-vnpay', [BookingController::class, 'payWithVNPay'])->name('pay-with-vnpay');
+
 // Review & Profile
 Route::post('/tour/{id}/review', [TourDetailController::class, 'addReview'])->name('addReview');
 Route::get('/user/{id}', [LoginController::class, 'show'])->name('user.profile');

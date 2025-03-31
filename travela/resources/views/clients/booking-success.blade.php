@@ -12,7 +12,9 @@
         
         <!-- Hiển thị flash message nếu có -->
         @if (session('success'))
-            <p class="success-message">{{ session('success') }}</p>
+            <p class="success-message alert alert-success">{{ session('success') }}</p>
+        @elseif (session('error'))
+            <p class="success-message alert alert-danger">{{ session('error') }}</p>
         @else
             <p class="success-message">Cảm ơn bạn đã đặt tour tại Travela. Dưới đây là thông tin chi tiết về đơn hàng của bạn.</p>
         @endif
@@ -20,13 +22,14 @@
         <div class="booking-details">
             <h3 class="details-header">Thông Tin Đơn Hàng</h3>
             <div class="details-content">
-                <p><strong>Mã đơn hàng:</strong> {{ $booking->bookingId }}</p> <!-- Sửa bookId thành id -->
-                <p><strong>Tour:</strong> {{ $tour->titlle }}</p> <!-- Sửa titlle thành title -->
+                <p><strong>Mã đơn hàng:</strong> {{ $booking->bookingId }}</p>
+                <p><strong>Tour:</strong> {{ $tour->titlle ?? $tour->title }}</p> <!-- Sửa titlle thành title, thêm fallback -->
                 <p><strong>Ngày khởi hành:</strong> {{ $tour->startDate }}</p>
                 <p><strong>Ngày kết thúc:</strong> {{ $tour->endDate }}</p>
                 <p><strong>Số lượng người lớn:</strong> {{ $booking->numAdult }}</p>
                 <p><strong>Số lượng trẻ em:</strong> {{ $booking->numChild }}</p>
                 <p><strong>Tổng tiền:</strong> {{ number_format($booking->totalPrice, 0, ',', '.') }} VNĐ</p>
+                <p><strong>Trạng thái:</strong> {{ $booking->bookingStatus }}</p>
                 <p><strong>Họ và tên:</strong> {{ $booking->fullName }}</p>
                 <p><strong>Email:</strong> {{ $booking->email }}</p>
                 <p><strong>Số điện thoại:</strong> {{ $booking->phoneNumber }}</p>

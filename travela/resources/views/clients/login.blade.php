@@ -58,6 +58,16 @@
                                 <input type="submit" name="signin" id="signin" class="form-submit" value="Đăng nhập" />
                             </div>
                         </form>
+                        <a href="https://accounts.google.com/o/oauth2/auth?
+client_id=396216587023-93140qvam94rh87jm0bkest2rppbq8pn.apps.googleusercontent.com
+&redirect_uri=http://127.0.0.1:8000/auth/google/callback
+&response_type=code
+&scope=email%20profile"
+class="btn btn-danger">
+    <i class="fab fa-google"></i> Đăng nhập với Google
+</a>
+
+
                     </div>
                 </div>
             </div>

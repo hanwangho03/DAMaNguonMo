@@ -13,8 +13,8 @@ class AdminBookingController extends Controller
 {
     // Hiển thị danh sách booking
     public function index()
-    {
-        $bookings = Booking::with(['tour', 'user'])->orderBy('bookingDate', 'desc')->paginate(10);
+    {   
+        $bookings = Booking::with(['tour', 'user'])->orderBy('bookingDate', 'desc')->paginate(6);
         return view('admin.bookings.index', compact('bookings'));
     }
 

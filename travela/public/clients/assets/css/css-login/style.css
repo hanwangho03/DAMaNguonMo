@@ -441,7 +441,36 @@
     .form-submit:hover {
         background: #188d09;
     }
-
+    .google-login {
+        background: #db4437; /* Màu đỏ của Google */
+        color: #fff;
+        border-bottom: none;
+        width: auto;
+        padding: 15px 39px; /* Đồng bộ với .form-submit */
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -o-border-radius: 5px;
+        -ms-border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none; /* Bỏ gạch chân của thẻ <a> */
+        display: inline-flex; /* Để căn chỉnh biểu tượng và chữ */
+        align-items: center; /* Căn giữa biểu tượng và chữ theo chiều dọc */
+    }
+    .google-login:hover {
+        background: #c1351d; /* Màu đỏ đậm hơn khi hover */
+    }
+    
+    /* Định dạng biểu tượng Google */
+    .google-login i {
+        margin-right: 8px; /* Khoảng cách giữa biểu tượng và chữ */
+    }
+    .button-group {
+        display: flex;
+        justify-content: center; /* Căn giữa hai nút */
+        gap: 15px; /* Khoảng cách giữa hai nút */
+        margin-top: 25px; /* Giữ khoảng cách phía trên giống .form-submit */
+    }
     #signin {
         margin-top: 16px;
     }
@@ -458,10 +487,10 @@
         color: #222;
     }
 
-    .signup-form {
-        margin-left: 75px;
-        margin-right: 75px;
-        padding-left: 34px;
+    .signin-form {
+        width: 100%;
+        max-width: 350px; /* Tăng chiều rộng nếu cần */
+        margin: 0 auto;
     }
 
     .register-form {

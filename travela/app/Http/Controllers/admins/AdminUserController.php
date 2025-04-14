@@ -13,7 +13,7 @@ class AdminUserController extends Controller
      */
     public function index()
     {
-        $users = Users::paginate(10); // Lấy 10 user mỗi trang
+        $users = Users::paginate(10);
         return view('admin.users', compact('users'));
     }
 
@@ -38,7 +38,6 @@ class AdminUserController extends Controller
             'isAdmin' => 'required|boolean'
         ]);
 
-        // Mã hóa password trước khi lưu
         $data['password'] = bcrypt($data['password']);
         $data['createdDate'] = now();
         $data['updatedDate'] = now();
@@ -79,7 +78,6 @@ class AdminUserController extends Controller
         ]);
 
         $usersModel = new Users();
-        // Kiểm tra user tồn tại
         if (!$usersModel->getUser($id)) {
             return redirect()->route('admin.users.index')->with('error', 'User không tồn tại');
         }

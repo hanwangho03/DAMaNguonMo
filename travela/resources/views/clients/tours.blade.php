@@ -99,21 +99,18 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-<!-- Khởi tạo Select2 -->
 <script>
     $(document).ready(function() {
         $('#destination').select2({
             placeholder: "Chọn hoặc nhập điểm đến",
             allowClear: true,
-            tags: true, // Cho phép nhập giá trị mới không có trong danh sách
+            tags: true, 
             width: '100%',
-            dropdownCssClass: 'custom-select2-dropdown' // Thêm class để tùy chỉnh dropdown
+            dropdownCssClass: 'custom-select2-dropdown' 
         });
 
-        // Giữ giá trị đã chọn từ query string
         var selectedDestination = "{{ request()->query('destination') }}";
         if (selectedDestination) {
-            // Nếu giá trị không có trong danh sách, thêm nó vào
             if (!$('#destination option[value="' + selectedDestination + '"]').length) {
                 $('#destination').append(new Option(selectedDestination, selectedDestination, true, true));
             }
@@ -124,12 +121,10 @@
 
 <!-- CSS tùy chỉnh -->
 <style>
-    /* Ẩn select gốc nếu cần */
     .select2-hidden-accessible + .select2-container {
         display: block !important;
     }
 
-    /* Tùy chỉnh Select2 */
     .select2-container {
         width: 100% !important;
     }
@@ -150,9 +145,8 @@
         height: 36px;
     }
 
-    /* Tùy chỉnh dropdown */
     .custom-select2-dropdown {
-        z-index: 1050; /* Đảm bảo dropdown hiển thị trên các phần tử khác */
+        z-index: 1050; 
     }
 
     .select2-container--default .select2-results__option--highlighted[aria-selected] {
@@ -176,21 +170,20 @@
         margin-left: auto;
     }
 
-    /* Đảm bảo không có trùng lặp */
     .form-select:not(.select2-hidden-accessible) {
         display: none !important;
     }
     .destination-item .image {
     position: relative;
     width: 100%;
-    height: 200px; /* Chiều cao cố định cho tất cả ảnh */
-    overflow: hidden; /* Ẩn phần ảnh vượt quá kích thước */
+    height: 200px; 
+    overflow: hidden; 
 }
 
 .destination-item .image img.tour-image {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Đảm bảo ảnh được cắt và lấp đầy khung mà không bị méo */
+    object-fit: cover; 
     display: block;
 }
 

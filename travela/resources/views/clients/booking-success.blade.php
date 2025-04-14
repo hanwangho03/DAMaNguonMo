@@ -10,7 +10,6 @@
         </div>
         <h2 class="success-header">Thanh Toán Thành Công!</h2>
         
-        <!-- Hiển thị flash message nếu có -->
         @if (session('success'))
             <p class="success-message alert alert-success">{{ session('success') }}</p>
         @elseif (session('error'))
@@ -23,7 +22,7 @@
             <h3 class="details-header">Thông Tin Đơn Hàng</h3>
             <div class="details-content">
                 <p><strong>Mã đơn hàng:</strong> {{ $booking->bookingId }}</p>
-                <p><strong>Tour:</strong> {{ $tour->titlle ?? $tour->title }}</p> <!-- Sửa titlle thành title, thêm fallback -->
+                <p><strong>Tour:</strong> {{ $tour->titlle ?? $tour->title }}</p>
                 <p><strong>Ngày khởi hành:</strong> {{ $tour->startDate }}</p>
                 <p><strong>Ngày kết thúc:</strong> {{ $tour->endDate }}</p>
                 <p><strong>Số lượng người lớn:</strong> {{ $booking->numAdult }}</p>

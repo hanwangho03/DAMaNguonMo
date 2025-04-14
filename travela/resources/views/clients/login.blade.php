@@ -139,7 +139,6 @@ class="form-submit google-login">
     </div>
 </div>
 
-<!-- Thêm script để xử lý chuyển đổi form -->
 <script>
     document.getElementById('sign-up').addEventListener('click', function () {
         document.getElementById('sign-in-form').style.display = 'none';
@@ -151,7 +150,6 @@ class="form-submit google-login">
         document.getElementById('sign-up-form').style.display = 'none';
     });
 
-    // Hiển thị form đăng ký nếu có lỗi từ form đăng ký
     @if ($errors->any() && old('username_register'))
         document.getElementById('sign-in-form').style.display = 'none';
         document.getElementById('sign-up-form').style.display = 'block';

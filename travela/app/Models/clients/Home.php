@@ -10,7 +10,7 @@ class Home extends Model
 {
     use HasFactory;
     protected $table = 'tour';
-    protected $primaryKey = 'tourId'; // Định nghĩa khóa chính
+    protected $primaryKey = 'tourId';
 
     public function getHomeTours()
     {
@@ -21,7 +21,7 @@ class Home extends Model
                 ->where('tourId', $tour->tourId)
                 ->pluck('imageURL')
                 ->map(function ($image) {
-                    return str_replace('travela\public\\', '', $image); // Chỉ giữ phần sau "public/"
+                    return str_replace('travela\public\\', '', $image);
                 });
         }
 

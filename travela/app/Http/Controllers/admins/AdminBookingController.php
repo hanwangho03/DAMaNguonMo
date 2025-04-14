@@ -10,15 +10,12 @@ use App\Models\Invoice;
 use App\Models\User; // Đổi từ Users thành User
 
 class AdminBookingController extends Controller
-{
-    // Hiển thị danh sách booking
-    public function index()
+{    public function index()
     {   
         $bookings = Booking::with(['tour', 'user'])->orderBy('bookingDate', 'desc')->paginate(6);
         return view('admin.bookings.index', compact('bookings'));
     }
 
-    // Cập nhật trạng thái booking
     public function updateStatus(Request $request, $id)
     {
         $booking = Booking::findOrFail($id);
@@ -28,7 +25,6 @@ class AdminBookingController extends Controller
         return redirect()->back()->with('success', 'Trạng thái booking đã được cập nhật.');
     }
 
-    // Xóa booking
     public function destroy($id)
     {
         $booking = Booking::findOrFail($id);

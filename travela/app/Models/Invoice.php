@@ -8,7 +8,7 @@ class Invoice extends Model
 {
     protected $table = 'invoice';
     public $timestamps = false;
-    protected $primaryKey = 'invoiceId'; // Khóa chính là invoiceId
+    protected $primaryKey = 'invoiceId'; 
     protected $fillable = [
         'bookingId',
         'amount',
@@ -16,7 +16,6 @@ class Invoice extends Model
         'details'
     ];
 
-    // Quan hệ với model Booking (nếu cần)
     public function booking()
     {
         return $this->belongsTo(Booking::class, 'bookingId', 'id');

@@ -50,7 +50,7 @@ class LoginController extends Controller
             'username' => $request->username_register,
             'email'    => $request->email_register,
             'password' => Hash::make($request->password_register),
-            'isAdmin'  => 0, // Mặc định không phải admin khi đăng ký
+            'isAdmin'  => 0,
         ];
 
         $this->login->registerAcount($dataInsert);
@@ -66,7 +66,6 @@ class LoginController extends Controller
             return redirect()->route('login')->with('error', 'Đăng nhập Google thất bại!');
         }
     
-        // Gửi yêu cầu lấy access token từ Google
         $response = Http::asForm()->post('https://oauth2.googleapis.com/token', [
             'client_id'     => env('GOOGLE_CLIENT_ID'),
             'client_secret' => env('GOOGLE_CLIENT_SECRET'),
@@ -81,18 +80,15 @@ class LoginController extends Controller
             return redirect()->route('login')->with('error', 'Không thể lấy token từ Google!');
         }
     
-        // Lấy thông tin user từ Google
         $googleUser = Http::withToken($token)->get('https://www.googleapis.com/oauth2/v2/userinfo')->json();
     
         if (!$googleUser || !isset($googleUser['email'])) {
             return redirect()->route('login')->with('error', 'Không thể lấy thông tin từ Google!');
         }
     
-        // Kiểm tra xem user đã tồn tại chưa
         $user = Users::where('email', $googleUser['email'])->first();
     
         if (!$user) {
-            // Nếu chưa có, tạo tài khoản mới
             $user = Users::create([
                 'username' => $googleUser['name'],
                 'email'    => $googleUser['email'],
@@ -101,10 +97,8 @@ class LoginController extends Controller
             ]);
         }
     
-        // Đăng nhập user
         Auth::login($user);
     
-        // 🔴 Lưu thông tin user vào session
         session([
             'userId'   => $user->userId, 
             'username' => $user->username,
@@ -130,7 +124,6 @@ class LoginController extends Controller
             return redirect()->back()->with('error', 'Tên đăng nhập không tồn tại!');
         }
     
-        // 🔴 Kiểm tra nếu user có `status = 'd'` hoặc `status = 'b'`
         if ($user->status === 'd') {
             return redirect()->back()->with('error', 'Tài khoản này đã bị xóa và không thể đăng nhập!');
         }
@@ -142,7 +135,6 @@ class LoginController extends Controller
             return redirect()->back()->with('error', 'Mật khẩu không chính xác!');
         }
     
-        // Lưu thông tin vào session
         $request->session()->put('userId', $user->userId);
         $request->session()->put('username', $username);
         $request->session()->put('isAdmin', $user->isAdmin);

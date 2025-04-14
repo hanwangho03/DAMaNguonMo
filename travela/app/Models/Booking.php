@@ -9,11 +9,11 @@ class Booking extends Model
 {
     use HasFactory;
 
-    protected $table = 'booking'; // Tên bảng trong database
+    protected $table = 'booking'; 
 
-    protected $primaryKey = 'bookingId'; // Khóa chính
+    protected $primaryKey = 'bookingId'; 
 
-    public $timestamps = false; // Nếu bảng không có `created_at` và `updated_at`
+    public $timestamps = false; 
 
     protected $fillable = [
         'tourId',
@@ -23,7 +23,7 @@ class Booking extends Model
         'numChild',
         'totalPrice',
         'bookingStatus',
-        'specialRequests', // Sửa lại tên cho đúng
+        'specialRequests',
         'email',
         'phoneNumber',
         'address',
@@ -38,13 +38,11 @@ class Booking extends Model
         'specialRequests' => 'string',
     ];
 
-    // Quan hệ với bảng Tour
     public function tour()
     {
         return $this->belongsTo(Tour::class, 'tourId');
     }
 
-    // Quan hệ với bảng User
     public function user()
     {
         return $this->belongsTo(User::class, 'userId');

@@ -11,11 +11,11 @@ class Users extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'user'; // Đảm bảo đúng tên bảng
+    protected $table = 'user'; 
 
-    protected $primaryKey = 'userId'; // Nếu khóa chính không phải `id`
+    protected $primaryKey = 'userId'; 
 
-    public $timestamps = false; // Nếu không dùng `created_at` và `updated_at`
+    public $timestamps = false; 
 
     protected $fillable = [
         'username', 'email', 'password', 'isAdmin', 'status'
@@ -39,7 +39,7 @@ class Users extends Authenticatable
     public function updateUser($id, $data)
     {
         return DB::table($this->table)
-            ->where('userId', $id) // Chú ý `userId` thay vì `userid`
+            ->where('userId', $id) 
             ->update($data);
     }
 }

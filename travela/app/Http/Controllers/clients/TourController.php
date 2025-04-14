@@ -61,7 +61,6 @@ class TourController extends Controller
             return response()->json(['error' => 'CSRF token missing'], 419);
         }
 
-        // Sử dụng Validator::make() thay vì $request->validate()
         $request->validate([
             'titlle'        => 'required|string|max:255',
             'description'   => 'required|string',
@@ -123,13 +122,11 @@ class TourController extends Controller
 
         Log::info('Dữ liệu hợp lệ, tiếp tục xử lý ảnh');
 
-        // Xử lý upload ảnh
         $imagePaths = [];
         if ($request->hasFile('images')) {
             $destinationPath = public_path('clients/assets/images/gallery-tours');
             Log::info('Đường dẫn thư mục: ' . $destinationPath);
 
-            // Kiểm tra hoặc tạo thư mục
             if (!file_exists($destinationPath) && !mkdir($destinationPath, 0777, true) && !is_dir($destinationPath)) {
                 Log::error('Không thể tạo thư mục: ' . $destinationPath);
                 return response()->json(['error' => 'Không thể tạo thư mục'], 500);
@@ -154,7 +151,6 @@ class TourController extends Controller
 
         Log::info('Danh sách ảnh đã lưu:', $imagePaths);
 
-        // Lưu dữ liệu vào database
         $dataInsert = [
             'titlle'        => $request->titlle,
             'description'   => $request->description,

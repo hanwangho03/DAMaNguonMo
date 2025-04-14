@@ -81,7 +81,6 @@ Route::middleware(['adminSession'])->group(function () {
     Route::get('/admin/stats/revenue', [AdminController::class, 'statsRevenue'])->name('admin.stats.revenue');
     
     
-    // ➕ Biểu đồ tròn: Thống kê doanh thu theo tháng
     Route::get('/admin/thong-ke/doanh-thu', [AdminThongKeController::class, 'thongKeDoanhThu'])->name('admin.thongke.doanhthu');
     
     Route::prefix('admin')->group(function () {

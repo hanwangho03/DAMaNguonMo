@@ -2,7 +2,6 @@
 @include('clients.blocks.banner')
 
 <section class="container" style="margin: 50px auto; max-width: 1200px;">
-    <!-- Hiển thị thông báo nếu có -->
     @if (session('error'))
         <div class="alert alert-danger">
             {{ session('error') }}
@@ -13,7 +12,6 @@
         @csrf
         <input type="hidden" name="tourId" value="{{ $tour->tourId }}">
 
-        <!-- Phần còn lại của form giữ nguyên -->
         <div class="booking-wrapper">
             <!-- Left Column: Contact Information and Privacy -->
             <div class="left-column">
@@ -107,7 +105,6 @@
         </div>
     </form>
 
-    <!-- Form ẩn để gửi dữ liệu đến route pay-with-vnpay -->
     <form id="vnpay-form" action="{{ route('pay-with-vnpay') }}" method="POST" style="display: none;">
         @csrf
         <input type="hidden" name="tourId" value="{{ $tour->tourId }}">
@@ -124,19 +121,17 @@
 @include('clients.blocks.footer')
 
 <script>
-    // Hàm tính tổng giá
     function updateTotalPrice() {
         let numAdult = parseInt(document.getElementById("numAdult").value) || 0;
         let numChild = parseInt(document.getElementById("numChild").value) || 0;
-        let adultPrice = {{ $tour->priceAdult }}; // Truyền giá trị trực tiếp từ PHP
-        let childPrice = {{ $tour->priceChild }}; // Truyền giá trị trực tiếp từ PHP
+        let adultPrice = {{ $tour->priceAdult }}; 
+        let childPrice = {{ $tour->priceChild }}; 
 
         let total = (numAdult * adultPrice) + (numChild * childPrice);
         document.getElementById("totalPrice").innerText = total.toLocaleString('vi-VN') + " VNĐ";
         document.getElementById("totalPriceInput").value = total;
     }
 
-    // Hàm bật/tắt nút "Thanh toán" và "Thanh toán bằng VNPay" dựa trên checkbox điều khoản
     function togglePayButton() {
         let agreeCheckbox = document.getElementById("agree");
         let payButton = document.querySelector(".btn-pay");
@@ -145,16 +140,15 @@
 
         if (!agreeCheckbox.checked) {
             payButton.disabled = true;
-            vnpayButton.disabled = true; // Tắt nút VNPay
-            errorMessage.style.display = "block"; // Hiển thị thông báo
+            vnpayButton.disabled = true; 
+            errorMessage.style.display = "block"; 
         } else {
             payButton.disabled = false;
-            vnpayButton.disabled = false; // Bật nút VNPay
-            errorMessage.style.display = "none"; // Ẩn thông báo
+            vnpayButton.disabled = false; 
+            errorMessage.style.display = "none"; 
         }
     }
 
-    // Hàm đồng bộ dữ liệu từ form chính sang form VNPay
     function syncVNPayForm() {
         document.getElementById("vnpay-numAdult").value = document.getElementById("numAdult").value;
         document.getElementById("vnpay-numChild").value = document.getElementById("numChild").value;
@@ -165,18 +159,15 @@
         document.getElementById("vnpay-address").value = document.getElementById("address").value;
     }
 
-    // Thêm sự kiện cho các input
     document.getElementById("numAdult").addEventListener("change", updateTotalPrice);
     document.getElementById("numChild").addEventListener("change", updateTotalPrice);
     document.getElementById("agree").addEventListener("change", togglePayButton);
 
-    // Thêm sự kiện cho nút "Thanh toán bằng VNPay"
     document.querySelector(".btn-vnpay").addEventListener("click", function () {
-        syncVNPayForm(); // Đồng bộ dữ liệu trước khi gửi
-        document.getElementById("vnpay-form").submit(); // Gửi form VNPay
+        syncVNPayForm(); 
+        document.getElementById("vnpay-form").submit(); 
     });
 
-    // Gọi các hàm khi tải trang
     updateTotalPrice();
     togglePayButton();
 </script>
@@ -317,9 +308,7 @@
     font-size: 16px;
     text-align: center;
     text-decoration: none;
-    /* Để thẻ <a> trông giống button */
     display: inline-block;
-    /* Để thẻ <a> tuân theo width */
     cursor: pointer;
     transition: background 0.3s;
 }
@@ -386,7 +375,6 @@
     width: 18px;
     height: 18px;
     accent-color: #007bff;
-    /* Màu xanh khi được tick */
     cursor: pointer;
 }
 
